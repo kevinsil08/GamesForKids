@@ -88,7 +88,10 @@ async function sendPrologQuery (comand) {
 function recognizeWord () {
   try {
     recognition.start()
-    console.log('Ready to receive a direction command.')
+    // console.log('Ready to receive a direction command.')
+    btnListen.value= " 🎤 ";
+    console.log(btnListen);
+
   } catch (error) {
     let errorP = document.getElementById("errorListen")
     errorP.innerText = "Escuchando ..."
@@ -107,6 +110,7 @@ function recognizeWord () {
 recognition.onresult = function (event) {
   obtainedWord = event.results[0][0].transcript.toUpperCase()
   console.log(obtainedWord)
+  btnListen.value= "Escuchar";
   if ('DERECHA DERECHO'.includes(obtainedWord) && ('DERECHA DERECHO').includes(labyrinthGame.currentDirection) ) {
     if (useArduino) {
       enviarOrden('d');
@@ -134,16 +138,21 @@ recognition.onresult = function (event) {
     labyrinthGame.increaseError();
     grid.cellByCord(tileWithCar.x , tileWithCar.y).shakeCell();
   }
-
+  showScore();
   if (selectedFinalCell.x == tileWithCar.x && selectedFinalCell.y == tileWithCar.y  ) {
     console.log("fin del juego felicidades");
     dropConfetti();
     showSaveGame();
   }
-  
+
+}
+
+function showScore(){
+  document.getElementById("pScore").innerText = labyrinthGame.indexDir;   
 }
 
 recognition.onspeechend = function () {
+  document.getElementById("btnListen").innerText = " ... ";
   recognition.stop()
 }
 
@@ -167,7 +176,7 @@ function modifyCell (functionIndex) {
       functionIndex.value++
       return functionIndex
     case 1: // set final cell
-      cell.final = true
+    cell.final ? cell.final = false : cell.final = true;
       if (cell.inicial) {
         alert('la celda seleccionada es inicial')
       } else {
@@ -177,7 +186,8 @@ function modifyCell (functionIndex) {
       }
       break
     case 2: // set path cells
-      cell.ruta = true
+    console.log(cell)
+    cell.ruta? cell.ruta = false : cell.ruta = true;
       return createBtnPaths(createPathsBtn, functionIndex) + 1
       break
 
@@ -216,16 +226,21 @@ function createBtnPaths (create, functionIndex) {
 function createBtnDirection () {
   if (createDirBtn) {
     let optionsContainer = document.createElement('div')
+    let optDiv = document.createElement('div')
     let rotateLeftBtn = document.createElement('button')
     let rotateRightBtn = document.createElement('button')
+    optDiv.classList.add("optDiv");
     rotateLeftBtn.innerText = '⭯'
     rotateLeftBtn.classList.add('btn', 'btn-outline-primary', 'btn-lg')
+    rotateLeftBtn.id = "lftBtn";
+    rotateRightBtn.id = "rigBtn";
     rotateRightBtn.classList.add('btn', 'btn-outline-primary', 'btn-lg')
     optionsContainer.classList.add('btnContainer')
     optionsContainer.id = 'dirDiv'
     rotateRightBtn.innerText = '⭮'
-    optionsContainer.appendChild(rotateLeftBtn)
-    optionsContainer.appendChild(rotateRightBtn)
+    optDiv.appendChild(rotateLeftBtn)
+    optDiv.appendChild(rotateRightBtn)
+    optionsContainer.appendChild(optDiv);
     document.getElementById('ins-det').appendChild(optionsContainer)
     rotateLeftBtn.addEventListener('click', rotateLeft)
     rotateRightBtn.addEventListener('click', rotateRight)

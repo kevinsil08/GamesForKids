@@ -21,8 +21,16 @@
     padding: var(--cell-gap);
     position: relative;
     border-radius: 1vmin;
+    margin: 2vmin;
 }
 
+#pScore{
+  font-size: 2rem;
+}
+
+.lblAcierto{
+  font-size: 2rem;
+}
 .cell {
     background-color: #AAA;
     border-radius: 1vmin;
@@ -140,6 +148,7 @@
     top: 0;
     cursor: pointer;
     margin:0 1vmin;
+    font-size: 2.3;
     font-family: 'Fuzzy Bubbles', sans-serif;
     animation: show 800ms ease-in-out;
     
@@ -223,4 +232,30 @@
   80% { transform: translate(-1px, -1px) rotate(1deg); }
   90% { transform: translate(1px, 2px) rotate(0deg); }
   100% { transform: translate(1px, -2px) rotate(-1deg); }
+}
+
+.optDiv{
+  margin-top: 3vmin;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-around;
+}
+
+.inst{
+  font-size: 2.5rem;
+}
+
+#lftBtn{
+  font-size: 3rem;
+}
+
+#rigBtn{
+  font-size: 3rem;
+}
+
+
+#scoreDiv{
+  margin-top: 5vmin;
+
 }

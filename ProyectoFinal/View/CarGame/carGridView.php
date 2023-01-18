@@ -18,6 +18,12 @@ function printInstructions($title, $instructions)
     echo '<form action="" method="POST">';
     echo  '<input type="button" value="Escuchar" class="btn-Blue hidden" id="btnListen">';
     echo '<p id="errorListen" class="hidden"></p>';
+    echo '<div id="scoreDiv" class="hidden">';
+    echo '<div class="optDiv">';
+    echo '<p class="lblAcierto">Aciertos</p>';
+    echo '<p id="pScore"></p>';
+    echo '</div>';
+    echo '</div>';
     echo "</form>" ;
     echo "</div></div>";
 }

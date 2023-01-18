@@ -119,6 +119,8 @@ class Cell {
             this.#cellElement.classList.add("cell-path");
         } else {
             this.#ruta = false;
+            this.#cellElement.classList.add("cell");
+            this.#cellElement.classList.remove("cell-path");
         }
     }
 
@@ -128,6 +130,8 @@ class Cell {
         this.#carTile.x = this.#x ;
         this.#carTile.y = this.#y ;
     }
+
+
 
     get carTile(){
         return this.#carTile;

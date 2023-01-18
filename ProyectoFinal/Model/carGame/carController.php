@@ -24,8 +24,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         echo $output ;
     }
     exit;
-} else {
-    echo "Json no recibido";
-}
+    } else {
+        echo "Json no recibido";
+    }
 
 ?>

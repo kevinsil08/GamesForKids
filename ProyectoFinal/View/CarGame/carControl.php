@@ -35,8 +35,6 @@
         <div>
             <h3 id="titleDialog">Stay in touch</h3>
             <p id="msj">
-                This is a dummy newsletter form so don't bother trying to test it. Not
-                that I expect you to, anyways. :)
             </p>
         </div>
 
@@ -74,7 +72,7 @@
         var carDirections = {
             dir: []
         };
-        var labyrinthGame  ;
+        var labyrinthGame;
         var useArduino = false;
         var selectedFinalCell;
         //array to control the modify order of cells
@@ -106,10 +104,11 @@
                 //mostrar modal de ruta valida y cuenta regresiva
 
                 // mandar ruta al arduino y al carro
-                const promise  =  routeDemostration();
+                const promise = routeDemostration();
                 // save game session 
                 labyrinthGame = new LabyrinthGame(carDirections.dir);
             } else {
+                console.log("no vale ruta")
                 openModal("Ruta no válida", "La ruta no puede trazada")
             }
         }
@@ -119,7 +118,7 @@
 
 
         // send audio to arduino
-        
+
         // botonOn.addEventListener('click', function() {
         //     enviarOrden("ON");
         // });
@@ -143,28 +142,29 @@
         //     return;
         // }
 
-        async function routeDemostration(){
-            carDirections.dir.forEach(function(comand){
-                carPromisePath = carPromisePath.then(function(){
-                   //mandar aqui al arduino
-                   // if(arduino) sendArduino(comand);
+        async function routeDemostration() {
+            carDirections.dir.forEach(function(comand) {
+                carPromisePath = carPromisePath.then(function() {
+                    //mandar aqui al arduino
+                    // if(arduino) sendArduino(comand);
                     moveCar(comand);
-                    return new Promise(function(resolve){
-                        setTimeout(resolve,intervalDirections);
+                    return new Promise(function(resolve) {
+                        setTimeout(resolve, intervalDirections);
                     });
                 });
             });
-            carPromisePath.then(function(){
+            carPromisePath.then(function() {
                 showVoiceInstructions("Comandos de voz")
             })
         }
 
-        function showVoiceInstructions(title){
-            document.getElementById("ins-title").innerText = title; 
+        function showVoiceInstructions(title) {
+            document.getElementById("ins-title").innerText = title;
             document.getElementById("btnListen").classList.toggle("hidden");
+            document.getElementById("scoreDiv").classList.toggle("hidden")
         }
 
-         
+
 
         function openModal(title, message) {
             const modal = document.querySelector(".modal");
