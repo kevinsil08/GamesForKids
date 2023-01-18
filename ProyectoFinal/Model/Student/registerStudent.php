@@ -7,14 +7,18 @@
 
     include '../Database/Connection.php';
     include 'functionsDatabase.php';
-    include '../../index.php';
+    include '../../SecurityToken.php';
 
     $name = $_POST['txtNombre'];
     $last_name = $_POST['txtApellido'];
     $id_teacher = $_POST['id_teacher'];
+    $email_student = $_POST['txtEmail'];
+    $passwd_student = $_POST['txtPasswd'];
+    $date_birth_student = $_POST['date_student'];
+    $sex_student = $_POST['sex_student'];
 
     global $conn;
-    $verificar = insertStudent($conn, $name, $last_name, $id_teacher);
+    $verificar = insertStudent($conn, $name, $last_name, $passwd_student, $email_student,$date_birth_student,$sex_student, $id_teacher);
     $encrypt_id_teacher = secureToke::tokenencrypt($id_teacher);
     if($verificar){
         header("Location: $principal_path?mensaje=registrado");

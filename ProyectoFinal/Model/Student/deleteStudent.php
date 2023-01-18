@@ -3,12 +3,12 @@
     $principal_path= '../../View/Teacher/studentsTeacher.php';
 
     if(!isset($_GET['aldzU1BpUm9xWXprRVhaTEdpU3JTQT09']) || empty($_SESSION['tch_id'])){
-        header("Location: ../../login.php");
+        header("Location: ../../index.php");
     }
 
     include '../Database/Connection.php';
     include 'functionsDatabase.php';
-    include '../../index.php';
+    include '../../SecurityToken.php';
 
     $id_teacher=$_SESSION["tch_id"];
 

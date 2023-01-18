@@ -4,8 +4,7 @@
 <head>
   <title>Games for Kids</title>
   <!-- Required meta tags -->
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta http-equiv="Content-Type" name="viewport" content="text/html; charset=UTF-8; width=device-width; initial-scale=1; shrink-to-fit=no"/>
 
   
   <!-- Bootstrap CSS v5.2.1 -->

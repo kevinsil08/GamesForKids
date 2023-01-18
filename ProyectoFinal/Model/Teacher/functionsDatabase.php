@@ -63,11 +63,12 @@ function selectLastTeacher($cnn){
         $teacher = mysqli_fetch_assoc($result);
         return $teacher;
     }
+    return null;
 }
 
-function updateTeacher($cnn, $id_teacher, $name, $last_name,$email){
+function updateTeacher($cnn, $id_teacher, $name, $last_name,$email,$passwd){
 
-    $sql = "CALL `pr_update_teacher`('$name', '$last_name','$email',$id_teacher);";
+    $sql = "CALL `pr_update_teacher`('$name', '$last_name','$email','$passwd',$id_teacher);";
     do
 	if($result=mysqli_store_result($cnn)){
 		mysqli_free_result($result);

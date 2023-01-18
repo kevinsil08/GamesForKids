@@ -1,24 +1,24 @@
 <?php 
 session_start();
 include '../../Template/header.php';
-include '../../Template/navTeacher.php';
+include '../../Template/navAdmin.php';
 include '../../Model/Database/Connection.php';
-include '../../Model/Student/functionsDatabase.php';
+include '../../Model/Admin/functionsDatabase.php';
 include '../../Model/Teacher/functionsDatabase.php';
 include '../../SecurityToken.php';
 
-if(empty($_SESSION['tch_id'])){
+if(empty($_SESSION['admin_id'])){
     session_destroy();
     header("Location: ../../index.php");
 }else{
-    $id_teacher=$_SESSION["tch_id"];
+    $id_admin=$_SESSION["admin_id"];
 }
 
 
 ?>
     <div class="container mt-5">
         <div class="row justify-content-center">
-            <div class="col-md-7">
+            <div class="col-md-8">
 
                 <?php
                 if(isset($_GET['mensaje']) && $_GET['mensaje'] == 'error'){
@@ -77,7 +77,7 @@ if(empty($_SESSION['tch_id'])){
 
                 <div class="card">
                     <div class="card-header">
-                        Listado de Estudiantes
+                        Listado de Profesores
                     </div>
                     <div class="p-4">
                         <div class="table-responsive">
@@ -94,21 +94,21 @@ if(empty($_SESSION['tch_id'])){
                                 <?php
                                     global $conn;
                                     
-                                    $lista = listStudents($conn, $id_teacher);
+                                    $lista = listAllTeachers($conn);
 
                                     if(isset($lista)){
 
                                                            
                                         foreach($lista as $fila){
-                                            $encrypt_id_std = secureToke::tokenencrypt($fila['std_id']);
+                                            $encrypt_id_tch = secureToke::tokenencrypt($fila['tch_id']);
 
                                                                         
                                 ?>
                                     <tr>
-                                        <td><?php echo $fila['std_name']; ?></td>
-                                        <td><?php echo $fila['std_last_name']; ?></td>
-                                        <td><button type="button" class="btn btn-warning"><a class="text-white" href="../../View/Teacher/studentsTeacher.php?mensaje=actualizar&aldzU1BpUm9xWXprRVhaTEdpU3JTQT09=<?php echo $encrypt_id_std;?>">Editar<i class="bi bi-pencil"></i></a> </button></td>
-                                        <td><button type="button" class="btn btn-danger"><a class="text-white" onclick='return eliminar();' href="../../Model/Student/deleteStudent.php?aldzU1BpUm9xWXprRVhaTEdpU3JTQT09=<?php echo $encrypt_id_std; ?>">Eliminar <i class="bi bi-trash"></i></a></button></td>
+                                        <td><?php echo $fila['tch_name']; ?></td>
+                                        <td><?php echo $fila['tch_last_name']; ?></td>
+                                        <td><button type="button" class="btn btn-warning"><a class="text-white" href="../../View/Admin/teachersAdmin.php?mensaje=actualizar&aldzU1BpUm9xWXprRVhaTEdpU3JTQT09=<?php echo $encrypt_id_tch;?>">Editar<i class="bi bi-pencil"></i></a> </button></td>
+                                        <td><button type="button" class="btn btn-danger"><a class="text-white" onclick='return eliminar();' href="../../Model/Admin/deleteAdmin.php?aldzU1BpUm9xWXprRVhaTEdpU3JTQT09=<?php echo $encrypt_id_tch; ?>">Eliminar <i class="bi bi-trash"></i></a></button></td>
                                         <!-- <td><a class="text-danger" data-bs-toggle="modal" data-bs-target="#exampleModal">Eliminar <i class="bi bi-trash"></i></a></td> -->
                                     </tr>
                                 
@@ -128,7 +128,6 @@ if(empty($_SESSION['tch_id'])){
 
             <?php 
             $path_form=null;
-            $text_button="Registrar Estudiante";
             $name = ""; 
             $last_name = ""; 
             $passwd_student = "";
@@ -136,36 +135,32 @@ if(empty($_SESSION['tch_id'])){
             $date_birth_student = "";
             $sex_student = "";
             $codigo = null;
+            $class = "col-md-4 invisible";
             if(!isset($_GET['aldzU1BpUm9xWXprRVhaTEdpU3JTQT09']) || $_GET['mensaje'] != 'actualizar'){
                 $path_form="../../Model/Student/registerStudent.php";
                 
             }else{
-                $path_form="../../Model/Student/editProcess.php";
-                $text_button="Actualizar Estudiante";
-                $encrypt_id_student = $_GET['aldzU1BpUm9xWXprRVhaTEdpU3JTQT09'];
-                $codigo = secureToke::tokendecrypt($encrypt_id_student);
+                $path_form="../../Model/Teacher/editProcess.php";
+                $encrypt_id_teacher = $_GET['aldzU1BpUm9xWXprRVhaTEdpU3JTQT09'];
+                $codigo = secureToke::tokendecrypt($encrypt_id_teacher);
+                $class = "col-md-4";
 
                 global $conn;
-                $student = selectStudent($conn,$codigo);
+                $teacher = selectTeacher($conn,$codigo);
 
-                $name = $student['std_name'];
-                $last_name = $student['std_last_name'];
-                $email_student = $student['std_email'];
-                $passwd_student = $student['std_password'];
-                $date_birth_student = $student['std_date_birth'];
-                $sex_student = $student['std_sex'];
+                $name = $teacher['tch_name'];
+                $last_name = $teacher['tch_last_name'];
+                $email_teacher = $teacher['tch_email'];
+                $passwd_teacher = $teacher['tch_password'];
+                $id_teacher = $teacher['tch_id'];
             }
             ?>
 
-            <div class="col-md-4">
+            <div class="<?php echo $class; ?>">
                 <div class="card">
                     <div class="card-header">
-                    <?php echo $text_button;
-                    date_default_timezone_set('America/Guayaquil');
-                    $today = date('Y-m-d');?>
+                    Actualizar Profesor
                     </div>
-
-                    
 
                     <form action=<?php echo $path_form; ?> class="p-4" method="POST">
                         <div class="mb-3">
@@ -178,28 +173,18 @@ if(empty($_SESSION['tch_id'])){
                         </div>
                         <div class="mb-3">
                             <label for="txtEmail" class="form-label">Correo: </label>
-                            <input type="email" class="form-control" name="txtEmail" value="<?php echo $email_student; ?>">
+                            <input type="email" class="form-control" name="txtEmail" value="<?php echo $email_teacher; ?>">
                         </div>
                         <div class="mb-3">
                             <label for="txtPasswd" class="form-label">Contraseña: </label>
-                            <input type="text" class="form-control" name="txtPasswd" autofocus required="true" value="<?php echo $passwd_student; ?>">
-                        </div>
-                        <div class="mb-3">
-                            <label for="date_student" class="form-label">Fecha de Nacimiento:</label>
-                            <input type="date" class="form-control" name="date_student" max="<?php echo $today;?>" autofocus required="true" value="<?php echo $date_birth_student; ?>">
-                        </div>
-                        <div class="mb-3">
-                            <label for="sex_student" class="form-label">Sexo:</label>
-                            <select name="sex_student" class="form-select"  aria-label="Default select example">
-                                <option value="M" >Masculino</option>
-                                <option value="F" selected>Femenino</option> 
-                            </select>
+                            <input type="text" class="form-control" name="txtpasswd" autofocus required="true" value="<?php echo $passwd_teacher; ?>">
                         </div>
 
                         <div class="d-grid">
+                        <input type="hidden" name="type_edit" value="admin">
                             <input type="hidden" name="id_teacher" value="<?php echo $id_teacher;?>">
                             <input type="hidden" name="codigo" value="<?php echo $codigo;?>">
-                            <input type="submit" class="btn btn-primary" value="<?php echo $text_button; ?>">
+                            <input type="submit" class="btn btn-primary" value="Actualizar">
                         </div>
                         
                     </form>

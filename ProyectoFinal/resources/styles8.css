@@ -1,0 +1,104 @@
+body{
+	padding: 0;
+	margin: 0;
+	background-image: url(https://img.freepik.com/vector-gratis/fondo-escena-parque-natural-arco-iris-cielo_1308-59739.jpg?w=2000);
+}
+
+.formulario{
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+	border-radius: 12px;
+	border: 1px solid white;
+}
+
+.formulario h2{
+	text-align: center;
+	padding: 0 0 20px 0;
+	border-bottom: 1px solid white;
+	font-family: cursive;
+}
+
+.formulario form{
+	padding: 0 40px;
+	box-sizing: border-box;
+}
+
+form .username{
+	position: relative;
+	margin: 30px 0;
+}
+
+.username input{
+	width: 80%;
+	padding: 0 20px;
+	height: 40px;
+	font-size: 16 px;
+	border: none;
+	border-radius: 12px;
+}
+
+
+form .password{
+	position: relative;
+	margin: 30px 0;
+}
+
+.password input{
+	width: 80%;
+	padding: 0 20px;
+	height: 40px;
+	font-size: 16 px;
+	border: none;
+	border-radius: 12px;
+}
+
+label{
+	font-size: 18px;
+	font-family: cursive;
+}
+
+input[type="submit"]{
+	width: 90%;
+	height: 50px;
+	border-radius: 25px;
+	border: 1px solid white;
+	background-color: #2CDC31;
+	font-size: 18px;
+	color: white;
+	cursor: pointer;
+	outline: none;
+	font-family: cursive;
+}
+
+
+input[type="submit"]:hover{
+	border-color: green;
+	transition: .5s;
+}
+
+.remember{
+	margin: 10px 0 20px 5px;
+	color: blue;
+	cursor: pointer;
+}
+
+.remember:hover{
+	text-decoration: underline;
+}
+
+.registrar{
+	margin: 30px 0;
+	text-align: center;
+	font-size: 16px;
+}
+
+.registrar a{
+	color: blue;
+	text-decoration: none;
+}
+
+.registrar a:hover{
+	text-decoration: underline;
+}

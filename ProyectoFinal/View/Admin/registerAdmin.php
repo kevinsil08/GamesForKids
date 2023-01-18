@@ -4,7 +4,7 @@
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<title>Registro</title>
-	<link rel="stylesheet" type="text/css" href="../../resources/styles9.css">
+	<link rel="stylesheet" type="text/css" href="../../resources/styles10.css">
 </head>
 <body>
 	<?php
@@ -23,23 +23,27 @@
     ?>
 	<div class="contenedor">
 		<h1>Crear sesion</h1>
-		<form action="../../Model/Teacher/registerTeacherProcess.php" method="post" >
+		<form action="../../Model/Admin/registerAdmin.php" method="post" >
 			<h2 id="error"></h2>
 			<div class="username">
-				<label>Ingrese el Nombre del profesor : </label>
+				<label>Ingerse su Nombre : </label>
 				<input type="text" name="nombre" autofocus required>
 			</div>
 			<div class="userLastname">
-				<label>Ingrese el Apellido del profesor : </label>
+				<label>Ingerse su Apellido : </label>
 				<input type="text" name="apellido" autofocus required>
 			</div>
 			<div class="email">
-				<label>Ingrese el Correo del profesor : </label>
+				<label>Ingerse su Correo : </label>
 				<input type="email" name="email" autofocus required>
 			</div>
 			<div class="password">
-				<label>Ingrese la Contraseña del profesor : </label>
+				<label>Ingerse su Contraseña : </label>
 				<input type="password" name="pass" autofocus required>
+			</div>
+			<div class="password">
+				<label>Ingerse el codigo de seguridad : </label>
+				<input type="password" name="codigo" autofocus required>
 			</div>
 			<input type="submit" value="Registrarse">
 		</form>

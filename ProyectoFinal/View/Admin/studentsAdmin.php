@@ -1,17 +1,17 @@
 <?php 
 session_start();
 include '../../Template/header.php';
-include '../../Template/navTeacher.php';
+include '../../Template/navAdmin.php';
 include '../../Model/Database/Connection.php';
+include '../../Model/Admin/functionsDatabase.php';
 include '../../Model/Student/functionsDatabase.php';
-include '../../Model/Teacher/functionsDatabase.php';
 include '../../SecurityToken.php';
 
-if(empty($_SESSION['tch_id'])){
+if(empty($_SESSION['admin_id'])){
     session_destroy();
     header("Location: ../../index.php");
 }else{
-    $id_teacher=$_SESSION["tch_id"];
+    $id_admin=$_SESSION["admin_id"];
 }
 
 
@@ -94,7 +94,7 @@ if(empty($_SESSION['tch_id'])){
                                 <?php
                                     global $conn;
                                     
-                                    $lista = listStudents($conn, $id_teacher);
+                                    $lista = listAllStudents($conn);
 
                                     if(isset($lista)){
 
@@ -107,8 +107,8 @@ if(empty($_SESSION['tch_id'])){
                                     <tr>
                                         <td><?php echo $fila['std_name']; ?></td>
                                         <td><?php echo $fila['std_last_name']; ?></td>
-                                        <td><button type="button" class="btn btn-warning"><a class="text-white" href="../../View/Teacher/studentsTeacher.php?mensaje=actualizar&aldzU1BpUm9xWXprRVhaTEdpU3JTQT09=<?php echo $encrypt_id_std;?>">Editar<i class="bi bi-pencil"></i></a> </button></td>
-                                        <td><button type="button" class="btn btn-danger"><a class="text-white" onclick='return eliminar();' href="../../Model/Student/deleteStudent.php?aldzU1BpUm9xWXprRVhaTEdpU3JTQT09=<?php echo $encrypt_id_std; ?>">Eliminar <i class="bi bi-trash"></i></a></button></td>
+                                        <td><button type="button" class="btn btn-warning"><a class="text-white" href="../../View/Admin/studentsAdmin.php?mensaje=actualizar&aldzU1BpUm9xWXprRVhaTEdpU3JTQT09=<?php echo $encrypt_id_std;?>">Editar<i class="bi bi-pencil"></i></a> </button></td>
+                                        <td><button type="button" class="btn btn-danger"><a class="text-white" onclick='return eliminar();' href="../../Model/Admin/deleteAdmin.php?aldzU1BpUm9xWXprRVhaTEdpU3JTQT09=<?php echo $encrypt_id_std; ?>">Eliminar <i class="bi bi-trash"></i></a></button></td>
                                         <!-- <td><a class="text-danger" data-bs-toggle="modal" data-bs-target="#exampleModal">Eliminar <i class="bi bi-trash"></i></a></td> -->
                                     </tr>
                                 
@@ -136,6 +136,7 @@ if(empty($_SESSION['tch_id'])){
             $date_birth_student = "";
             $sex_student = "";
             $codigo = null;
+            $class = "col-md-4 invisible";
             if(!isset($_GET['aldzU1BpUm9xWXprRVhaTEdpU3JTQT09']) || $_GET['mensaje'] != 'actualizar'){
                 $path_form="../../Model/Student/registerStudent.php";
                 
@@ -144,6 +145,7 @@ if(empty($_SESSION['tch_id'])){
                 $text_button="Actualizar Estudiante";
                 $encrypt_id_student = $_GET['aldzU1BpUm9xWXprRVhaTEdpU3JTQT09'];
                 $codigo = secureToke::tokendecrypt($encrypt_id_student);
+                $class = "col-md-4";
 
                 global $conn;
                 $student = selectStudent($conn,$codigo);
@@ -154,10 +156,11 @@ if(empty($_SESSION['tch_id'])){
                 $passwd_student = $student['std_password'];
                 $date_birth_student = $student['std_date_birth'];
                 $sex_student = $student['std_sex'];
+                $id_teacher = $student['tch_id'];
             }
             ?>
 
-            <div class="col-md-4">
+            <div class="<?php echo $class; ?>">
                 <div class="card">
                     <div class="card-header">
                     <?php echo $text_button;
@@ -197,6 +200,7 @@ if(empty($_SESSION['tch_id'])){
                         </div>
 
                         <div class="d-grid">
+                        <input type="hidden" name="type_edit" value="admin">
                             <input type="hidden" name="id_teacher" value="<?php echo $id_teacher;?>">
                             <input type="hidden" name="codigo" value="<?php echo $codigo;?>">
                             <input type="submit" class="btn btn-primary" value="<?php echo $text_button; ?>">
