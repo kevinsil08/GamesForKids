@@ -28,7 +28,7 @@
 
     ?>
     <!-- modal dialog -->
-    <section class="modal hidden">
+    <!-- <section class="modal hidden">
         <div class="flex">
             <button class="btn-close">⨉</button>
         </div>
@@ -39,7 +39,7 @@
         </div>
 
         <button class="btn" id="btnClose">Cerrar</button>
-    </section>
+    </section> -->
 
     <div class="overlay hidden"></div>
 
@@ -73,7 +73,7 @@
             dir: []
         };
         var labyrinthGame;
-        var useArduino = false;
+        var useArduino = true;
         var selectedFinalCell;
         //array to control the modify order of cells
         var functionIndex = {
@@ -112,19 +112,7 @@
                 openModal("Ruta no válida", "La ruta no puede trazada")
             }
         }
-        // cell.isInicial(tru`e);
-
-        // prolog functions
-
-
-        // send audio to arduino
-
-        // botonOn.addEventListener('click', function() {
-        //     enviarOrden("ON");
-        // });
-        // botonOFF.addEventListener('click', function() {
-        //     enviarOrden("OFF");
-        // });
+        
 
         // Listen voice comands event
         let btnListen = document.getElementById('btnListen');
