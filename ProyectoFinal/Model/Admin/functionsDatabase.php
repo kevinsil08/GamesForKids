@@ -1,5 +1,10 @@
 <?php
 
+/*
+    Selecciona todas las columnas del Administrador
+    $cnn es la variable de la conexión
+    $id_admin es la variable que identifica al administrador que está en esa sesión
+*/
 function selectAdmin($cnn, $id_admin){
     $sql = "CALL `pr_select_admin`($id_admin);";
     do
@@ -14,9 +19,18 @@ function selectAdmin($cnn, $id_admin){
     }
 }
 
-function updateAdmin($cnn, $id_teacher, $name, $last_name,$email){
+/*
+    Actualiza todas las columnas menos la del 'id' del Administrador
+    $cnn -> variable de la conexión
+    $name -> Nombre del Administrador
+    $last_name -> Apellido del Administrador
+    $passwd -> Contraseña del Administrador
+    $email -> Correo del Administrador
+    $id_admin -> variable que identifica al administrador que está en esa sesión
+*/
+function updateAdmin($cnn, $id_admin, $name, $last_name,$passwd,$email){
 
-    $sql = "CALL `pr_update_teacher`('$name', '$last_name','$email',$id_teacher);";
+    $sql = "CALL `pr_update_admin`('$name', '$last_name','$email','$passwd',$id_admin);";
     do
 	if($result=mysqli_store_result($cnn)){
 		mysqli_free_result($result);

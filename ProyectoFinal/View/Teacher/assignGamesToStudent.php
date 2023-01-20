@@ -15,6 +15,34 @@ if(empty($_SESSION['tch_id'])){
   $teacher = selectTeacher($conn, $id_teacher);
   $_SESSION["tch_id"] = $id_teacher;
 }
+
+global $conn;
+  
+$result_match_id = selectLastMatch($conn,$id_teacher);
+
+if($result_match_id != null ){
+  $_SESSION["passwd_generated"] = $result_match_id["mtg_password"]; 
+}
+
+    
+?>
+
+<?php
+if((isset($_GET['juego']) && $_GET['juego'] == 'generado') || (isset($result_match_id['mtg_password']) && $result_match_id['mtg_password'] != null)){
+  $passwd_generated =$_SESSION["passwd_generated"]; 
+?>
+  <div class="alert alert-success alert-dismissible fade show" role="alert">
+      El c&oacute;digo de ingreso es <strong><?php echo $passwd_generated; ?></strong>
+      <p>Para asignar otro juego debe terminar el juego en curso.</p>
+      
+      <form action="../../Model/Game/finishGame.php" method="POST">
+        <input type="hidden" name="passwd" value="<?php echo $passwd_generated; ?>">
+        <button type="submit" class="btn btn-success mt-2">Finalizar Juego</button>
+      </form>
+      <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+  </div>
+<?php
+}else{
 ?>
 
 
@@ -77,5 +105,6 @@ if(empty($_SESSION['tch_id'])){
 
 
 <?php 
+}
 include '../../Template/footer.php'
 ?>

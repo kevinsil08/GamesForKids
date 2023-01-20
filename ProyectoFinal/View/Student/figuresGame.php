@@ -4,41 +4,41 @@
 	include '../../Model/Database/Connection.php';
 	include '../../Model/Game/functionsDatabase.php';
 	
-	if(empty($_SESSION)){
+	if(empty($_SESSION)){//Si el arreglo de las variables de sesión está vacía, se destruye la sesión y se regresa al index.php
 		session_destroy();
 	    header("Location: ../../index.php");
 	}
 
 	$passwd_match = null;
-	if(isset($_SESSION['passwd'])){
+	if(isset($_SESSION['passwd'])){//Si la variable de sesión['passwd'] tiene un valor, se guarda en la variable $passwd_match
 		$passwd_match = $_SESSION['passwd'];
 	}
 
-	if(!isset($_SESSION['match_type'])){
+	if(!isset($_SESSION['match_type'])){//Si la variable de sesión['match_type'] está vacía, se destruye la sesión y se regresa al index.php
 		session_destroy();
 		header("Location: ../../index.php");
 	}
 	$match_type = $_SESSION['match_type'];
 	
-	if(!isset($_SESSION['puntuacion'])){
+	if(!isset($_SESSION['puntuacion'])){//Si la variable de sesión['puntuacion'] está vacía, se destruye la sesión y se regresa al index.php
 		session_destroy();
 		header("Location: ../../index.php");
 	}
 	$score = $_SESSION['puntuacion'];
 
-	if(!isset($_SESSION['cantidad'])){
+	if(!isset($_SESSION['cantidad'])){//Si la variable de sesión['cantidad'] está vacía, se destruye la sesión y se regresa al index.php
 		session_destroy();
 		header("Location: ../../index.php");
 	}
 	$quantity_questions = $_SESSION['cantidad']; 
 
-	if(!isset($_SESSION['type_game'])){
+	if(!isset($_SESSION['type_game'])){//Si la variable de sesión['type_game'] está vacía, se destruye la sesión y se regresa al index.php
 		session_destroy();
 		header("Location: ../../index.php");
 	}
 	$id_type_game = $_SESSION['type_game'];
 
-	if(!isset($_SESSION['tch_id'])){
+	if(!isset($_SESSION['tch_id'])){//Si la variable de sesión['tch_id'] está vacía, se destruye la sesión y se regresa al index.php
 		session_destroy();
 		header("Location: ../../index.php");
 	}
@@ -46,19 +46,19 @@
 
 	global $conn;
 
-	$figures = $_SESSION['figures'];
-	$id_match_game = $_SESSION['match_id'];
-	$detail_only_game = $_SESSION['list_detail_games'];
+	$figures = $_SESSION['figures'];//$_SESSION['figures'] -> nombre de los detalles del tipo de juego ['figures'] guardadas en la DB
+	$id_match_game = $_SESSION['match_id']; //$_SESSION['match_id'] -> Id del match actual
+	$detail_only_game = $_SESSION['list_detail_games']; //detail_only_game -> Regresa los detalles del tipo de juego 'Figuras' de la DB
 
 	$result = null;
-	if($match_type == 'teacher'){
+	if($match_type == 'teacher'){ //Se compara si el tipo de match ha sido creado por el Profesor
 
 		$id_detail_game = listMatchQuestionsAnswers($conn,$id_match_game);
 		$_SESSION['match_questions_answers_id'] = $id_detail_game[$quantity_questions]['mtch_qst_id'];
 		$_SESSION['detail_game_correct_answer_id'] = $id_detail_game[$quantity_questions]['dtg_correct_answer'];
 		$result = type_manual($detail_only_game,$id_detail_game[$quantity_questions]['dtg_correct_answer'],$figures);
 
-	}else if($match_type == 'random'){
+	}else if($match_type == 'random'){ //Se compara si el tipo de match ha sido creado aleatoriamente
 
 		$random_number_figure = rand(0,count($detail_only_game)-1);
 		$id_detail_game = getIdDetailGame($detail_only_game,$random_number_figure);
@@ -68,12 +68,14 @@
 		$id_match_questions_answers = selectLastMatchQuestionsAnswers($conn,$id_match_game);
 		$_SESSION['match_questions_answers_id'] = $id_match_questions_answers['mtch_qst_id'];
 		
-	}else{
+	}else{//Si no es ninguna de las anteriores opciones, se destruye la sesión y se regresa al index.php
 		session_destroy();
 		header("Location: ../../index.php");
 	}
 
 	$select_figure=$figures[$result];
+
+	$_SESSION['figure_correct'] = $select_figure;
 
 	function type_manual($detail_games,$id_detail_game,$figures){
 		$name_figure = null;
@@ -106,7 +108,7 @@
   
 ?>
 <!DOCTYPE html>
-<html>
+<html lang="es">
 <head>
     <title>Figuras</title>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
@@ -115,8 +117,6 @@
     <link rel="stylesheet" type="text/css" href="Css/styles2.css">
 </head>
 <body>
-
-<script type="text/javascript" src="tau-prolog.js"></script>
 
 
 
@@ -139,17 +139,17 @@
 	</div>
 
 	<section class="figures-section">
-		<p id="sec-int">Dibuje un <span id="fig-to-select"><?php echo $select_figure;?></span></p>
-		<input type="image" name="cofig" id="img-conf" src="https://www.pngall.com/wp-content/uploads/4/Settings-PNG-Image-File.png" >
+		<p id="sec-int">Dibuja un <span id="fig-to-select"><?php echo $select_figure;?></span></p>
+		<input type="button" id="hablar" style="font-size: 50px; height: 70px; width: 70px;" value="🎙" onclick="decir('Dibuja un '+document.getElementById('fig-to-select').innerHTML)">
 		<div class="sec-game">
 			<div class="first card">
-				<div id ="c0" class="Triángulo"><div class="triangle-border"><div class="triangle-inner"></div></div></div>
+				<div id ="c0" class="trian"><div class="triangle-border"><div class="triangle-inner"></div></div></div>
 			</div>
 			<div  class="second card">
-				<div id ="c1" class="Círculo"></div>
+				<div id ="c1" class="circle"></div>
 			</div>
 			<div class="third card">
-				<div id ="c2" class="Cuadrado"></div>
+				<div id ="c2" class="square"></div>
 			</div>
 		</div>
 	</section>
@@ -168,7 +168,7 @@
           <div id="copyVideo">Tu imagen aparecerá aquí.</div>
         </div>  
             
-            <button id="btn-empezar">Subir Foto</button>
+            <button id="btn-empezar" style="visibility: hidden;">Subir Foto</button>
         </form> 
   </div>  
 	
@@ -212,19 +212,10 @@
 	
 	<footer>
 		<div class="score-container">
-			<p>Aciertos</p>
-			<p id="num-aciertos"><?php echo $score; ?></p>
+			<p id="num-aciertos">Tú puedes</p>
 		</div>
 	</footer>
 
-	<script>
-		var session = pl.create();
-		var parsed = session.query("fruits_in([carrot, apple, banana, broccoli], X)."); // true
-    var callback = console.log;
-    session.answer(callback); // {X/apple}
-    session.answer(callback); // {X/banana}
-    session.answer(callback); // false
-	</script>
   
 <script src="main.js"></script>
  

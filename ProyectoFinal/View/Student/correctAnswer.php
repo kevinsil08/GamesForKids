@@ -1,35 +1,25 @@
 <?php
 	session_start();
-	//Se inicializa las siguientes variables de sesión
-	$_SESSION['puntuacion']=0;
-	$_SESSION['cantidad']=0;
-	$_SESSION['type_game']=1;
-
-	if(!isset($_SESSION['name_student'])){
-		session_destroy();
-	    header("Location: ../../index.php");
-	}
+	$select_figure = $_SESSION['figure_correct'];
 ?>
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <title>Figuras</title>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>Respuesta</title>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/webcamjs/1.0.25/webcam.min.js"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.3/css/bootstrap.min.css" />
-	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css" rel="stylesheet"
-    integrity="sha384-iYQeCzEYFbKjA/T2uDLTpkwGzCiq6soy8tYaI1GyVh/UjpbCx/TYkiZhlZB6+fzT" crossorigin="anonymous">
-    <link rel="stylesheet" type="text/css" href="Css/styles2.css">
+	<link rel="stylesheet" href="../CarGame/CarGameStyle.css">
+	<link rel="stylesheet" type="text/css" href="Css/styles2.css">
 </head>
 <body>
-
-<div class="containerTitle">
+	<div class="container">
 		<header>
-			<h2>FIGURAS</h2>
+		La respuesta correcta es:
+			<h2 id="fig-to-select"><?php echo $select_figure; ?></h2>
 		</header>
 	</div>
-	
-	<!-- divisor de circulos azul -->
 	<div class="divisor dark-blue">
 		<div class="divisor">
 			<svg id="" preserveAspectRatio="xMidYMax meet" class="svg-separator sep3" viewBox="0 0 1600 100" style="display: block;">
@@ -37,46 +27,25 @@
 				<path class="" style="opacity: 1;fill: #2a3f54;" d="M-40,83.627C20.307,83.627,20.058,44,80,44s60.003,40,120,40s59.948-40,120-40s60.313,40,120,40s60.258-40,120-40s60.202,40,120,40s60.147-40,120-40s60.513,40,120,40s60.036-40,120-40c59.964,0,60.402,40,120,40s59.925-40,120-40s60.291,40,120,40s60.235-40,120-40s60.18,40,120,40s59.82,0,59.82,0l0.18,14H-60V84L-40,83.627z"></path>
 				<path class="" style="fill: rgb(34, 49, 63);" d="M-40,95.627C20.307,95.627,20.058,56,80,56s60.003,40,120,40s59.948-40,120-40s60.313,40,120,40s60.258-40,120-40s60.202,40,120,40s60.147-40,120-40s60.513,40,120,40s60.036-40,120-40c59.964,0,60.402,40,120,40s59.925-40,120-40s60.291,40,120,40s60.235-40,120-40s60.18,40,120,40s59.82,0,59.82,0l0.18,138H-60V96L-40,95.627z"></path>
 			</svg>
-			
 		</div>
 	</div>
 
-	<?php
-	if(isset($_GET['mensaje']) && $_GET['mensaje'] == 'error'){
-	?>
-	<div class="alert alert-danger alert-dismissible fade show" role="alert">
-		<strong>Error!</strong> Vuelve a intentarlo.
-		<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-	</div>
-	<?php 
-	}
-	?>
-
-<?php
-	if(isset($_GET['mensaje']) && $_GET['mensaje'] == 'contra'){
-	?>
-	<div class="alert alert-danger alert-dismissible fade show" role="alert">
-		<strong>Error!</strong> La contraseña no es la correcta
-		<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-	</div>
-	<?php 
-	}
-	?>
-
 	<section class="figures-section">
-        <form class="sec-imgs" id="startGame" method="POST" action="../../Model/Game/figuresGameController.php">
-            <p id="sec-int">Contraseña de tu profesor</p>
-            <input type="text" id="passwd-teacher" name="passwd" style="font-family: 'Fuzzy Bubbles', sans-serif; height: 50px; margin-left:10px">
-        </form> 
-        <p id="name-student">T&uacute; puedes <?php echo $_SESSION['name_student']; ?>!!</p>
-        <button id="btn-empezar" class="btn-central" form="startGame">Empezar el juego</button>
-		<input type="button" id="hablar" style="font-size: 50px; height: 70px; width: 70px;" value="🎙" onclick="decir(document.getElementById('name-student').innerHTML+ ' Para empezar el juego da click en el botón')">
         
+	<input type="button" id="hablar" style="font-size: 50px; height: 70px; width: 70px;" value="🎙" onclick="decir('Esto es un <?php echo $select_figure; ?>')">
 		
 	</section>
-	
-	<!-- divisor de circulos rojo -->
-	
+
+	<div class="sec-game">
+		<div class="card">
+			<div class="s" id="answer"><div class="s2" id="answer2"><div class="s3" id="answer3"></div></div></div>
+		</div>
+	</div>
+	<div class="sec-buttons" >
+		<a href="" style="visibility: hidden;"><button id="btn-empezar">Siguiente>></button></a>
+		<a href="figuresGame.php"><button id="btn-empezar">Siguiente>></button></a>
+	</div>
+
 	<div class="divisor red">
 		<svg id="" preserveAspectRatio="xMidYMax meet" class="svg-separator sep1" viewBox="0 0 1600 100" data-height="100">
 			<path class="" style="opacity: 1;fill: #bc4565;" d="M1040,56c0.5,0,1,0,1.6,0c-16.6-8.9-36.4-15.7-66.4-15.7c-56,0-76.8,23.7-106.9,41C881.1,89.3,895.6,96,920,96
@@ -112,18 +81,13 @@
 		</svg>
 	</div>
 
-	<script>
-		const synth = window.speechSynthesis;
-		function decir(texto){
-			const utterThis = new SpeechSynthesisUtterance(texto);
-			utterThis.lang = 'es-ES';
-			synth.speak(utterThis);
-			//speechSynthesis.speak(new SpeechSynthesisUtterance(texto));
-		}
-	</script>
- 
-	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/js/bootstrap.min.js"
-    integrity="sha384-7VPbUDkoPSGFnVtYi0QogXtr74QeVeeIs99Qfg5YCF+TidwNdjvaKZX19NZ/e6oz" crossorigin="anonymous">
-  </script>
+	<footer>
+		<div class="score-container">
+			<p id="num-aciertos">Tú puedes</p>
+		</div>
+	</footer>
+
+	<script src="Funciones.js"></script>
+	
 </body>
 </html>

@@ -57,13 +57,8 @@ if(isset($_GET['mensaje']) && $_GET['mensaje'] == 'error'){
           </div>
 
           <div class="card-body">
-            <h5 class="card-title">Asignar Juegos a los Estudiantes</h5>
-            <a href="assignGamesToStudent.php" class="btn btn-primary">Asignar <i class="bi bi-archive"></i></a>
-          </div>
-
-          <div class="card-body">
             <h5 class="card-title">Ajustes del Perfil</h5>
-            <a href="editadmin.php" class="btn btn-warning">Ajustes <i class="bi bi-gear"></i></a>
+            <a href="editAdmin.php" class="btn btn-warning">Ajustes <i class="bi bi-gear"></i></a>
           </div>
       </div>
           

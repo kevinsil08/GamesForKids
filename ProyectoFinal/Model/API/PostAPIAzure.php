@@ -4,7 +4,7 @@
     $select_figure= $_POST['result'];
     $score = $_POST['score'];
     $quantity_questions = $_POST['quantity'];
-    //$quantity_questions++;
+
     $folderPath = "Imgs/";//Carpeta donde se guardará la img temporal
   
     $fetch_imgParts = explode(";base64,", $img);
@@ -25,7 +25,7 @@
     $curlHandle = curl_init("https://southcentralus.api.cognitive.microsoft.com/customvision/v3.0/Prediction/bfee77cf-1423-4b86-a2ba-fcb2553db987/classify/iterations/Iteration4/image?$prediction_key");//URL autorizado por Azure
 
     //opciones para el POST de la API
-    curl_setopt($curlHandle, CURLOPT_POSTFIELDS, $postBody); 
+    curl_setopt($curlHandle, CURLOPT_POSTFIELDS, $postBody);
     curl_setopt($curlHandle, CURLOPT_RETURNTRANSFER, true);
     curl_setopt($curlHandle, CURLOPT_HTTPHEADER, $headers);
     curl_setopt($curlHandle, CURLOPT_SSL_VERIFYHOST, false);
@@ -47,63 +47,96 @@
     //var_dump($response['predictions']['0']['tagName']);//primer nombre de la figura
     $figura_azure=$response['predictions']['0']['tagName'];
 
+    $probability = $response['predictions']['0']['probability'];
+
+    //Se reemplazan las tíldes
     $figura_azure = str_replace('á','a',$figura_azure);
     $figura_azure = str_replace('é','e',$figura_azure);
     $figura_azure = str_replace('í','i',$figura_azure);
     $figura_azure = str_replace('ó','o',$figura_azure);
     $figura_azure = str_replace('ú','u',$figura_azure);
 
-    var_dump($figura_azure);
 
-    $id_student = $_SESSION['id_student'];
-    $id_teacher = $_SESSION['tch_id'];
-    $id_match_game = $_SESSION['match_id'];
+    /*
+    Se llama a las variables de sesión para obtener los diferentes datos
+    */
+
+    $id_student = $_SESSION['id_student'];//Id del Estudiante
+    $id_teacher = $_SESSION['tch_id'];//Id del Profesor
+    $id_match_game = $_SESSION['match_id'];// Id del Match que se está jugando
+
     $id_match_questions_answers = $_SESSION['match_questions_answers_id'];
     $id_detail_correct_answer = $_SESSION['detail_game_correct_answer_id'];
-    $detail_only_game = $_SESSION['list_detail_games'];
-    $figures = $_SESSION['figures'];
+
+    $detail_only_game = $_SESSION['list_detail_games']; //Regresa los detalles ['dtg_id']['dtg_detail'] del tipo de juego 'Figuras' de la DB
+
+
+    //$figura_azure -> es la respuesta de la API con el nombre del primer tag
     $id_selected_figure_id = getFigureSelectedId($detail_only_game,$figura_azure);
 
     include '../../Model/Database/Connection.php';
 	include '../../Model/Game/functionsDatabase.php';
 
     global $conn;
+    /*
+        Se ingresa el Matchevent en la DB
+    */
     insertMatchEvent($conn,$id_match_questions_answers,$id_match_game,$id_student,$id_teacher,$id_selected_figure_id,$id_detail_correct_answer);
 
     //var_dump($figura_azure);
 
-    if($id_selected_figure_id == $id_detail_correct_answer){
+    $IS_CORRECT_ANSWER = false;
+
+    if( ($id_selected_figure_id == $id_detail_correct_answer) && ($probability >= 0.70) ){//Si el Id de la figura($id_selected_figure_id) que se tomó la foto es igual a la respuesta($id_detail_correct_answer) y la  probabilidad sea mayor o igual al 70% se suma un punto
         $score++;
         $_SESSION['puntuacion'] = $score; 
-        echo"<br>";
-        var_dump($score);
+        $IS_CORRECT_ANSWER = true;
     }
 
 
-    if($quantity_questions == 3){
-        updateMatchResult($conn,$id_match_game,$quantity_questions+1,$score);
-        $result = finishMatch($conn,$id_match_game);
+    if($quantity_questions == 3){//Si están 3 rondas 
+
+        updateMatchResult($conn,$id_match_game,$quantity_questions+1,$score);//Se actuliza el MatchResult de la DB
+
+        $type_match = selectMatch($conn,$id_match_game);//Se selecciona el Match en curso
+
+        if($type_match['mtg_typ_match'] == 'R'){//Si ha sido creado aleatoriamente, se finaliza el match
+            $result = finishMatch($conn,$id_match_game);
+        }
 
         var_dump($score);
-        //header("Location: noteStudent.php?tipo=aleatorio&puntuacion=$score");
-    }else{
-        if($quantity_questions == 0){
+        header("Location: ../../View/Student/resultMatch.php");
+
+    }else{//Si aún no están 3 rondas
+
+        if($quantity_questions == 0){//Si es la primera ronda se crea el MatchResult
             insertMatchResult($conn,$id_match_game,$id_teacher,$id_student,$score);
-        }else{
+        }else{//Entonces se actuliza el MatchResult, con el $score que ha realizado el niño y el número de preguntas $quantity_questions
             updateMatchResult($conn,$id_match_game,$quantity_questions+1,$score);
         }
-        $quantity_questions++;
-        $_SESSION['cantidad'] = $quantity_questions; 
-        header("Location: ../../View/Student/figuresGame.php");
+        $quantity_questions++;//Se suma una nueva pregunta
+        $_SESSION['cantidad'] = $quantity_questions; //Se asigna a la variable de sesión el número de preguntas
+
+        if($IS_CORRECT_ANSWER){
+            header("Location: ../../View/Student/figuresGame.php");//Se redirige a la siguiente ronda
+        }else{
+            header("Location: ../../View/Student/correctAnswer.php");//Se redirige a la siguiente ronda
+        }
+        
     }
 
+    /*
+        $select_figure -> Es el nombre del tag que ha regresado la API
+        $detail_only_game -> detalles ['dtg_id']['dtg_detail'] del tipo de juego 'Figuras' de la DB
+    */
     function getFigureSelectedId($detail_only_game,$select_figure){
-		for($x=0;$x<count($detail_only_game);$x++){
-			if($detail_only_game[$x]['dtg_detail'] == $select_figure){
-				return $detail_only_game[$x]['dtg_id'];
+		for($x=0;$x<count($detail_only_game);$x++){ //Recorre las filas de los detalles del tipo de juego 'figuras'
+			if($detail_only_game[$x]['dtg_detail'] == $select_figure){//Si el nombre de los detalles es igual al nombre que devuelve la API
+				return $detail_only_game[$x]['dtg_id'];//Se retorna ['dtg_id'], es el Id del detalle que está en la db
 			}
 		}
 
+        return null;
 	}
     
 ?>

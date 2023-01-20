@@ -54,11 +54,43 @@ function insertMatch($cnn, $id_teacher, $id_type_game, $password_generated){
         echo "Error: ".$e;
         return false;
     }
-    return true;
+    return $date;
 }
 
 function selectLastMatch($cnn,$id_teacher){
     $sql = "CALL `pr_last_match_for_teacher`($id_teacher);";
+    do
+	if($result=mysqli_store_result($cnn)){
+		mysqli_free_result($result);
+    } while(mysqli_more_results($cnn) && mysqli_next_result($cnn));
+
+    $result = mysqli_query($cnn , $sql);
+    if (mysqli_num_rows($result) > 0) {
+        $match = mysqli_fetch_assoc($result);
+        return $match;
+    }
+    return null;
+}
+
+//pr_last_match_for_teacher_with_password
+
+function selectLastMatchWithPassword($cnn,$id_teacher,$passwd){
+    $sql = "CALL `pr_last_match_for_teacher_with_password`($id_teacher,'$passwd');";
+    do
+	if($result=mysqli_store_result($cnn)){
+		mysqli_free_result($result);
+    } while(mysqli_more_results($cnn) && mysqli_next_result($cnn));
+
+    $result = mysqli_query($cnn , $sql);
+    if (mysqli_num_rows($result) > 0) {
+        $match = mysqli_fetch_assoc($result);
+        return $match;
+    }
+    return null;
+}
+
+function selectLastMatchRandom($cnn,$id_teacher,$date){
+    $sql = "CALL `pr_last_match_for_student`($id_teacher,'$date');";
     do
 	if($result=mysqli_store_result($cnn)){
 		mysqli_free_result($result);
@@ -191,6 +223,21 @@ function updateMatchResult($cnn, $id_match_game,$quantity_questions_match,$score
         return false;
     }
     return true;
+}
+
+function selectMatch($cnn,$id_match){
+    $sql = "CALL `pr_select_match`($id_match);";
+    do
+	if($result=mysqli_store_result($cnn)){
+		mysqli_free_result($result);
+    } while(mysqli_more_results($cnn) && mysqli_next_result($cnn));
+
+    $result = mysqli_query($cnn , $sql);
+    if (mysqli_num_rows($result) > 0) {
+        $match = mysqli_fetch_assoc($result);
+        return $match;
+    }
+    return null;
 }
 
 function finishMatch($cnn, $id_match){

@@ -25,11 +25,13 @@
         session_destroy();
         header("Location: ../../index.php");
     } 
-
+ 
     $passwd_match = null;
     $match_type = null;
 
     var_dump($_POST);
+
+    global $conn;
     
     if(($_POST['passwd']) == null){
         echo "a";
@@ -38,6 +40,14 @@
 
     }else if(isset($_POST['passwd'])){
         $passwd_match = $_POST['passwd'];
+
+        $match_passwd = selectLastMatch($conn,$id_teacher,$passwd_match);//passwd match 
+
+        if($match_passwd['mtg_password'] !=$passwd_match){
+            header("Location: ../../View/Student/startFiguresGame.php?mensaje=contra");
+            exit();
+        }
+
         $_SESSION['passwd'] =$passwd_match;
         $_SESSION['match_type'] = 'teacher';    
 
@@ -63,12 +73,16 @@
         header("Location: ../../index.php");
     }
 
-    global $conn;
-    $detail_only_game = listDetailGames($conn,$id_type_game);
-    $_SESSION['list_detail_games'] = $detail_only_game;
+    
+    $detail_only_game = listDetailGames($conn,$id_type_game); //detail_only_game -> Regresa los detalles del tipo de juego 'Figuras' de la DB
+    $_SESSION['list_detail_games'] = $detail_only_game; //Se inicializa 'list_detail_games' con la variable $detail_only_game
 
-    $figures = array();
+    $figures = array();//Se inicializa un array vacío
     $figures = getNamesFigures($figures,$detail_only_game);
+
+    /*
+       $_SESSION['figures'] -> nombre de los detalles del tipo de juego ['figures'] guardadas en la DB
+    */
     $_SESSION['figures'] = $figures;
 
     if($match_type == 'teacher'){
@@ -86,26 +100,40 @@
 
     header("Location: ../../View/Student/figuresGame.php");
 
+    /*
+        $figures -> array vacío
+        $detail_games -> detalles del tipo de juego seleccionado 'figures'
+    */
     function getNamesFigures($figures, $detail_games){
-        for($x=0;$x<count($detail_games);$x++){
-            array_push($figures, $detail_games[$x]['dtg_detail']);
+        for($x=0;$x<count($detail_games);$x++){//Recorre el arreglo de los detalles del tipos de juego 'figures' 
+            //['dtg_detail'] -> es el nombre de la columna que regresa la consulta a la DB
+            array_push($figures, $detail_games[$x]['dtg_detail']);//Se guarda en $figures los nombres de los detalles del tipo de juego   
         }
 
-        return $figures;
+        return $figures;//retorna el array del nombre de las figuras
     }
 
+    /*
+        Se crea un match
+        $id_type_game -> Id del tipo de juego 'Figuras'
+        $id_teacher -> Id del Teacher del Estudiante
+    */
     function createMatch($id_type_game,$id_teacher){
         global $conn;
 
+        /*
+            Se inserta el match en la DB
+            $result -> devuelve la fecha creada(timestamp) del match
+        */
         $result = insertMatch($conn,$id_teacher,$id_type_game,'null');
-        $result_match_id = selectLastMatch($conn,$id_teacher);
+        $result_match_id = selectLastMatchRandom($conn,$id_teacher,$result);
 
-        if($result && $result_match_id != null){
+        if($result_match_id != null){//Si está todo correcto y es diferente de null, se devuelve la Id del match creado
             return $result_match_id['mtg_id'];
-        }else{
-            return null;
         }
 
+        return null;
+        
     }
 
 

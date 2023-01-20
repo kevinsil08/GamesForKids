@@ -5,7 +5,7 @@ Webcam.set({
     image_format: 'jpeg',
     jpeg_quality: 100
 });
-
+const synth = window.speechSynthesis;
 Webcam.attach('#web_cam');
 
 // show random initial images on cards
@@ -16,11 +16,13 @@ function take_snapshot() {
         $(".image-tag").val(web_cam_data);
         document.getElementById('copyVideo').innerHTML = '<img style="border-radius: 20px;" src="' + web_cam_data + '"/>';
     });
+
+    document.getElementById('btn-empezar').style.visibility = 'visible';
 }
 
 function randomLoadImages(text) {
     console.log(text);
-    let clases = ['Cuadrado', 'Triángulo', 'Círculo', 'Corazón'];
+    let clases = ['square', 'Triangle', 'circle'];
     const shuffledArray = clases.sort((a, b) => 0.5 - Math.random());
     let cards = document.getElementsByClassName('card');
     let index = 0;
@@ -29,7 +31,7 @@ function randomLoadImages(text) {
             let newDiv = document.createElement("div");
             newDiv.classList.add(clases[index]);
             element.appendChild(newDiv);
-        if (clases[index] == 'Triángulo') {
+        if (clases[index] == 'Triangle') {
             let secondDiv = document.createElement("div");
             secondDiv.classList.add("triangle-border");
             newDiv.appendChild(secondDiv);
@@ -42,11 +44,13 @@ function randomLoadImages(text) {
     });
 
 
+}
 
-    
-
-
-
+function decir(texto){
+    const utterThis = new SpeechSynthesisUtterance(texto);
+    utterThis.lang = 'es-ES';
+    synth.speak(utterThis);
+    //speechSynthesis.speak(new SpeechSynthesisUtterance(texto));
 }
 
 

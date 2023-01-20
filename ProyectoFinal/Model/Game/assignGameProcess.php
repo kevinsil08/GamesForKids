@@ -23,7 +23,7 @@
     var_dump($id_type_game);
 
     $result = insertMatch($conn,$id_teacher,$id_type_game,$passwd_generated);
-    $result_match_id = selectLastMatch($conn,$id_teacher);
+    $result_match_id = selectLastMatchWithPassword($conn,$id_teacher,$passwd_generated);
     insertQuestionsAnswers($conn,$result_match_id['mtg_id']);
 
     if($result && $result_match_id != null){

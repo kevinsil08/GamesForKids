@@ -71,6 +71,7 @@
                         <th scope="col">Apellido</th>
                         <th scope="col"># de Preguntas</th>
                         <th scope="col"># de Preguntas contestadas correctamente</th>
+                        <th scope="col">Fecha</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -99,6 +100,7 @@
                         <td><?php echo $fila['std_last_name']; ?></td>
                         <td><?php echo $fila['match_quantity_answers']; ?></td>
                         <td><?php echo $fila['match_correct_answer_student']; ?></td>
+                        <td><?php echo $fila['mtg_created']; ?></td>
                     </tr>
                 
                 <?php

@@ -4,8 +4,9 @@ include '../../Template/header.php';
 include '../../Template/navTeacher.php';
 include '../../Model/Database/Connection.php';
 include '../../Model/Teacher/functionsDatabase.php';
+include '../../Model/Game/functionsDatabase.php';
 include '../../SecurityToken.php';
-
+  global $conn;
 if(empty($_SESSION['tch_id'])){
   session_destroy();
   header("Location: ../../index.php");
@@ -14,6 +15,17 @@ if(empty($_SESSION['tch_id'])){
   $teacher = selectTeacher($conn, $id_teacher);
   $_SESSION["tch_id"] = $id_teacher;
 }
+
+  global $conn;
+  
+  $result_match_id = selectLastMatch($conn,$id_teacher);
+
+  if($result_match_id != null ){
+    $_SESSION["passwd_generated"] = $result_match_id["mtg_password"]; 
+  }
+  
+
+  
 ?>
 
 <?php
@@ -28,17 +40,17 @@ if(isset($_GET['mensaje']) && $_GET['mensaje'] == 'registrado'){
 ?>
 
 <?php
-if(isset($_GET['juego']) && $_GET['juego'] == 'generado'){
+if(isset($_GET['juego']) && $_GET['juego'] == 'generado'|| (isset($result_match_id['mtg_password']) && $result_match_id['mtg_password'] != null)){
   $passwd_generated =$_SESSION["passwd_generated"]; 
 ?>
-<div class="alert alert-success alert-dismissible fade show" role="alert">
-    <strong>Generado correctamente!</strong> El c&oacute;digo de ingreso es <strong><?php echo $passwd_generated; ?></strong>
-    <form action="../../Model/Game/finishGame.php" method="POST">
-      <input type="hidden" name="passwd" value="<?php echo $passwd_generated; ?>">
-      <button type="submit" class="btn btn-success mt-2">Finalizar Juego</button>
-    </form>
-    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-</div>
+  <div class="alert alert-success alert-dismissible fade show" role="alert">
+      <strong>Generado correctamente!</strong> El c&oacute;digo de ingreso es <strong><?php echo $passwd_generated; ?></strong>
+      <form action="../../Model/Game/finishGame.php" method="POST">
+        <input type="hidden" name="passwd" value="<?php echo $passwd_generated; ?>">
+        <button type="submit" class="btn btn-success mt-2">Finalizar Juego</button>
+      </form>
+      <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+  </div>
 <?php
 }
 ?>

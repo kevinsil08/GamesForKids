@@ -14,7 +14,7 @@
 <body>
     <div class="container">
 		<header>
-			<h2>Seleccione el juego</h2>
+			<h2>Selecciona el juego</h2>
 		</header>
 	</div>
 	
@@ -40,8 +40,8 @@
                 </div>
             
                 <div class="type-button" id='btn-orientation'>
-                    <img src="Imgs/figuras.png" ></img>
-                    <a><h3>Orientación</h3></a>
+                    <img style="margin-left: 30px; height: 200px;" width="250px" src="Imgs/orientacion.png" ></img>
+                    <a href="../CarGame/carControl.php"><h3>Orientación</h3></a>
                 </div>
 
             </div>

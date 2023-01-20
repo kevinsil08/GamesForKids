@@ -1,24 +1,17 @@
 <?php
 	session_start();
 	//Se inicializa las siguientes variables de sesión
-	$_SESSION['puntuacion']=0;
-	$_SESSION['cantidad']=0;
-	$_SESSION['type_game']=1;
-
-	if(!isset($_SESSION['name_student'])){
-		session_destroy();
-	    header("Location: ../../index.php");
-	}
 ?>
 <!DOCTYPE html>
 <html lang="es">
 <head>
     <title>Figuras</title>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/webcamjs/1.0.25/webcam.min.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.3/css/bootstrap.min.css" />
 	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css" rel="stylesheet"
-    integrity="sha384-iYQeCzEYFbKjA/T2uDLTpkwGzCiq6soy8tYaI1GyVh/UjpbCx/TYkiZhlZB6+fzT" crossorigin="anonymous">
+    integrity="sha384-iYQeCzEYFbKjA/T2uDLTpkwGzCiq6soy8tYaI1GyVh/UjpbCx/TYkiZhlZB6+fzT" crossorigin="anonymous"> -->
+	<link rel="stylesheet" type="text/css" href="../CarGame/CarGameStyle.css">
     <link rel="stylesheet" type="text/css" href="Css/styles2.css">
 </head>
 <body>
@@ -63,14 +56,19 @@
 	}
 	?>
 
-	<section class="figures-section">
-        <form class="sec-imgs" id="startGame" method="POST" action="../../Model/Game/figuresGameController.php">
-            <p id="sec-int">Contraseña de tu profesor</p>
-            <input type="text" id="passwd-teacher" name="passwd" style="font-family: 'Fuzzy Bubbles', sans-serif; height: 50px; margin-left:10px">
-        </form> 
+<section class="figures-section" style="visibility: hidden;">
         <p id="name-student">T&uacute; puedes <?php echo $_SESSION['name_student']; ?>!!</p>
-        <button id="btn-empezar" class="btn-central" form="startGame">Empezar el juego</button>
-		<input type="button" id="hablar" style="font-size: 50px; height: 70px; width: 70px;" value="🎙" onclick="decir(document.getElementById('name-student').innerHTML+ ' Para empezar el juego da click en el botón')">
+        <button id="btn-empezar" class="btn-central" form="startGame">Regresar</button>
+		<input type="button" id="hablar" value="▶" onclick="decir('Lo has hecho excelente <?php echo $_SESSION['name_student']; ?>')">
+        
+		
+		</section>
+
+	<section class="figures-section">
+		
+        <p id="name-student">Muy bien!!</p>
+        <a href="dashboard.php"><button id="btn-empezar" class="btn-central" form="startGame">Regresar</button></a>
+		<input type="button" id="hablar" style="font-size: 50px; height: 70px; width: 70px;" value="🎙"onclick="decir('Muy bien, has hecho lo mejor que puedes <?php echo $_SESSION['name_student']; ?>')">
         
 		
 	</section>
@@ -121,6 +119,9 @@
 			//speechSynthesis.speak(new SpeechSynthesisUtterance(texto));
 		}
 	</script>
+	<script type="text/javascript" src="../CarGame/carFunctions.js"></script>
+    <script type="text/javascript" src="../CarGame/confetti.js"></script>
+	<script>dropConfetti();</script>
  
 	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/js/bootstrap.min.js"
     integrity="sha384-7VPbUDkoPSGFnVtYi0QogXtr74QeVeeIs99Qfg5YCF+TidwNdjvaKZX19NZ/e6oz" crossorigin="anonymous">
