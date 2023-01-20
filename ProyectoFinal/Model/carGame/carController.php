@@ -1,7 +1,6 @@
 <?php
 
 
-include '../carGame/borrarPhp.php';
 // manage client request arduino comands / prolog querys
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $request_raw = file_get_contents('php://input');
@@ -26,18 +25,18 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         echo "Json no recibido";
     }
 }
-
-// function mD($order){
-// $comPort = fopen("COM7", "w+");
-//     $consola = shell_exec ("mode COM7: BAUD = 9600 PARITY = n DATA = 8 STOP = 1 to = off dtr = off rts = off");
-//     //  Segun lo que tenga post , procesar la palabra y enviar al puerto serial 
+function mD($order){
+$comPort = fopen("COM7", "w+");
+    $consola = shell_exec ("mode COM7: BAUD = 9600 PARITY = n DATA = 8 STOP = 1 to = off dtr = off rts = off");
+    //  Segun lo que tenga post , procesar la palabra y enviar al puerto serial 
     
-//     If (! $comPort) {
-//         $status = "Not on";
-//         echo $status;
-//     }
-//     echo " se ehecutor";    
-//     fwrite($comPort, $order );
-//     fclose($comPort);
-//     sleep(1);
-// }
+    If (! $comPort) {
+        $status = "Not on";
+        echo $status;
+    }
+    fwrite($comPort, $order );
+    fclose($comPort);
+    sleep(1);
+}
+
+
