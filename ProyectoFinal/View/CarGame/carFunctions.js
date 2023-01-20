@@ -113,7 +113,7 @@ recognition.onresult = function (event) {
   btnListen.value= "Escuchar";
   if ('DERECHA DERECHO'.includes(obtainedWord) && ('DERECHA DERECHO').includes(labyrinthGame.currentDirection) ) {
     if (useArduino) {
-      enviarOrden('d');
+      enviarOrden('R');
     }
     // move car tile
     moveCar("DERECHA");
@@ -121,7 +121,7 @@ recognition.onresult = function (event) {
   }
   else if ('IZQUIERDA IZQUIERDO'.includes(obtainedWord) && ('IZQUIERDA IZQUIERDO').includes(labyrinthGame.currentDirection) ) {
     if (useArduino) {
-      enviarOrden('i');
+      enviarOrden('L');
     }
     // move car tile
     moveCar("IZQUIERDA");
@@ -129,18 +129,19 @@ recognition.onresult = function (event) {
   }
   else if ('ADELANTE'.includes(obtainedWord) && ('ADELANTE').includes(labyrinthGame.currentDirection) ) {
     if (useArduino) {
-      enviarOrden('a');
+      enviarOrden('F');
     }
     // move car tile
     moveCar("ADELANTE");
     labyrinthGame.increaseIndexDir();
   }else{
+    enviarOrden('E');
     labyrinthGame.increaseError();
     grid.cellByCord(tileWithCar.x , tileWithCar.y).shakeCell();
   }
   showScore();
   if (selectedFinalCell.x == tileWithCar.x && selectedFinalCell.y == tileWithCar.y  ) {
-    console.log("fin del juego felicidades");
+    // enviarOrden('G');
     dropConfetti();
     showSaveGame();
   }
