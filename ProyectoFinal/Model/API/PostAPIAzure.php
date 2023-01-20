@@ -94,7 +94,7 @@
     }
 
 
-    if($quantity_questions == 3){//Si están 3 rondas 
+    if($quantity_questions == 2){//Si están 3 rondas 
 
         updateMatchResult($conn,$id_match_game,$quantity_questions+1,$score);//Se actuliza el MatchResult de la DB
 
