@@ -85,12 +85,12 @@
 
     //var_dump($figura_azure);
 
-    $IS_CORRECT_ANSWER = false;
+    $IS_CORRECT_ANSWER = true;
 
-    if( ($id_selected_figure_id == $id_detail_correct_answer) && ($probability >= 0.70) ){//Si el Id de la figura($id_selected_figure_id) que se tomó la foto es igual a la respuesta($id_detail_correct_answer) y la  probabilidad sea mayor o igual al 70% se suma un punto
+    if( ($id_selected_figure_id != $id_detail_correct_answer) || ($probability <= 0.70) ){//Si el Id de la figura($id_selected_figure_id) que se tomó la foto es igual a la respuesta($id_detail_correct_answer) y la  probabilidad sea mayor o igual al 70% se suma un punto
         $score++;
         $_SESSION['puntuacion'] = $score; 
-        $IS_CORRECT_ANSWER = true;
+        $IS_CORRECT_ANSWER = false;
     }
 
 

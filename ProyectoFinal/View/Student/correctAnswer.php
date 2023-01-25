@@ -14,12 +14,12 @@
 	<link rel="stylesheet" type="text/css" href="Css/styles2.css">
 </head>
 <body>
-	<div class="container">
+<div class="containerTitle">
 		<header>
-		La respuesta correcta es:
-			<h2 id="fig-to-select"><?php echo $select_figure; ?></h2>
+			<h2>FIGURAS</h2>
 		</header>
 	</div>
+
 	<div class="divisor dark-blue">
 		<div class="divisor">
 			<svg id="" preserveAspectRatio="xMidYMax meet" class="svg-separator sep3" viewBox="0 0 1600 100" style="display: block;">
@@ -30,8 +30,9 @@
 		</div>
 	</div>
 
+
 	<section class="figures-section">
-        
+	<h2 id="sec-int" style="color: black;">Esto es un <span id="fig-to-select" style="color: #d24d57;"><?php echo $select_figure;?></span></h2>
 	<input type="button" id="hablar" style="font-size: 50px; height: 70px; width: 70px;" value="🎙" onclick="decir('Esto es un <?php echo $select_figure; ?>')">
 		
 	</section>

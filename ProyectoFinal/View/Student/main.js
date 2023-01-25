@@ -8,6 +8,10 @@ Webcam.set({
 const synth = window.speechSynthesis;
 Webcam.attach('#web_cam');
 
+
+
+
+
 // show random initial images on cards
 randomLoadImages(document.getElementById("fig-to-select").innerHTML);
 

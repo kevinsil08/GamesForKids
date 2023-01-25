@@ -162,16 +162,13 @@
         //     });
         //     return;
         // }
-        var limit= true;
+
         async function routeDemostration() {
             carDirections.dir.forEach(function(comand) {
                 carPromisePath = carPromisePath.then(function() {
                     //mandar aqui al arduino
                     // if(arduino) sendArduino(comand);
                     moveCar(comand);
-                    
-                    if ( comand == "ATRAS") limit = false
-                    if (limit) playSpeech(comand)
                     return new Promise(function(resolve) {
                         setTimeout(resolve, intervalDirections);
                     });

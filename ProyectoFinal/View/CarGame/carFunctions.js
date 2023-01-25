@@ -303,14 +303,6 @@ function saveGame() {
 
 }
 
-function playSpeech(text){
-  var utterance = new SpeechSynthesisUtterance(text);
-  utterance.lang = 'es-ES';
-  var voices = window.speechSynthesis.getVoices();
-  utterance.voice = voices.filter(function(voice) { return voice.name == 'Zira'; })[0];
-  speechSynthesis.speak(utterance);
-}
-
 
 // third party confetty 
 

@@ -115,6 +115,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/webcamjs/1.0.25/webcam.min.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.3/css/bootstrap.min.css" />
     <link rel="stylesheet" type="text/css" href="Css/styles2.css">
+
 </head>
 <body>
 
@@ -158,7 +159,7 @@
         <form class="sec-imgs" method="POST" action="../../Model/API/PostAPIAzure.php">
         <div class="cardVideo">
           <div id="web_cam"></div>   
-        </div>  
+        </div>   
           <input type=button class="btn-photo"value="Tomar Foto" onClick="take_snapshot()">
           <input type="hidden" name="image" class="image-tag">
           <input type="hidden" name="quantity" value="<?php echo $quantity_questions; ?>">
@@ -218,6 +219,7 @@
 
   
 <script src="main.js"></script>
+
  
 </body>
 </html> 

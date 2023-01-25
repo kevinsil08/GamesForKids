@@ -58,6 +58,7 @@
 	<div class="alert alert-danger alert-dismissible fade show" role="alert">
 		<strong>Error!</strong> La contraseña no es la correcta
 		<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+		<input type="button" id="hablar" style="font-size: 30px; height: 50px; width: 50px;" value="🎙" onclick="decir('La contraseña no es la correcta, pregúntale a tu profesor la contraseña correcta')">
 	</div>
 	<?php 
 	}

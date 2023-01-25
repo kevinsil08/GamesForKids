@@ -1,7 +1,8 @@
 <footer class="container-fluids bg-dark fixed-bottom">
     <div class="row">
         <div class="col-md text-light text-center py-3">
-            Desarrollado por muchos
+            <!-- Desarrollado por Kevin Campoverde, Patricio Ram&oacute;n y Anthony Romero -->
+            La perfección no es alcanzable, pero si perseguimos la perfección podemos conseguir la excelencia - Vince Lombardi
         </div>
     </div>
     </footer>
