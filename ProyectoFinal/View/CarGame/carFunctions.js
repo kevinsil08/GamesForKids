@@ -193,11 +193,14 @@ function modifyCell (functionIndex) {
   switch (val) {
     case 0: // set initial cell
       showInstrucction(functionIndex)
+      playSpeech("Seleccione casilla final");
       cell.inicial = true
       functionIndex.value++
       return functionIndex
     case 1: // set final cell
     cell.final ? cell.final = false : cell.final = true;
+      playSpeech("Seleccione casillas de ruta ");
+    
       if (cell.inicial) {
         alert('la celda seleccionada es inicial')
       } else {
@@ -213,8 +216,10 @@ function modifyCell (functionIndex) {
       break
 
     case 3:
-      //set car direction
+      //set car directionr
+      playSpeech("Seleccione sentido del carrito") ;
       createBtnDirection()
+
       return
 
     default:
@@ -322,7 +327,7 @@ function saveGame() {
   // send data to post controller json and save to sql
    const promise  = sendCarSession(labyrinthGame);
   promise.then((data) =>{
-    console.log(data);
+    window.location = '../../View/Student/dashboard.php';
   });
 
 }

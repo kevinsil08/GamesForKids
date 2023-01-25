@@ -27,16 +27,18 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         exit;
     }
     if(property_exists($request , 'directions')){
-        $result = insertMatch($conn,$_SESSION['tch_id'],"2",'null');
+    $result = insertMatch($conn,$_SESSION['tch_id'],"2",'null');
         $result_match_id = selectLastMatchRandom($conn,$_SESSION['tch_id'],$result);
-        
+        insertMatchQuestionsAnswers($conn,$result_match_id['mtg_id'],5,'R');
+        $match_questions_id = selectLastMatchQuestionsAnswers($conn, $result_match_id['mtg_id']);
+        insertMatchEvent($conn,$match_questions_id['mtch_qst_id'],$result_match_id['mtg_id'],$_SESSION['id_student'],$_SESSION['tch_id'],5,5);
         insertMatchResult($conn, $result_match_id['mtg_id'] , $_SESSION['tch_id'], $_SESSION['id_student'],0);
         updateMatchResult($conn, $result_match_id['mtg_id'] , $request->com, $request->numErrors);
         finishMatch($conn, $result_match_id['mtg_id']);
-        var_dump($request);
-        echo "todo bien";
-        exit;
+        header("Location: ../../View/Student/dashboard.php");
+        exit();
     }
+    
     echo "Json no recibido";
     exit;
     }
