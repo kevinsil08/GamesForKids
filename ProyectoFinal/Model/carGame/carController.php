@@ -26,9 +26,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         echo $output;
         exit;
     }
-    if(property_exists($request , 'directions'))
+    if(property_exists($request , 'directions')){
         $result = insertMatch($conn,$_SESSION['tch_id'],"2",'null');
         $result_match_id = selectLastMatchRandom($conn,$_SESSION['tch_id'],$result);
+        
         insertMatchResult($conn, $result_match_id['mtg_id'] , $_SESSION['tch_id'], $_SESSION['id_student'],0);
         updateMatchResult($conn, $result_match_id['mtg_id'] , $request->com, $request->numErrors);
         finishMatch($conn, $result_match_id['mtg_id']);
@@ -38,8 +39,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
     echo "Json no recibido";
     exit;
-    
-}
+    }
 function mD($order){
 $comPort = fopen("COM7", "w+");
     $consola = shell_exec ("mode COM7: BAUD = 9600 PARITY = n DATA = 8 STOP = 1 to = off dtr = off rts = off");
