@@ -327,6 +327,9 @@ class LabyrinthGame{
         return this.#directions[this.#indexDir]
     }
 
+    get numberCommands(){
+        return this.#numberCommands;
+    }
     set indexDir(index){
         this.#indexDir = index
     }

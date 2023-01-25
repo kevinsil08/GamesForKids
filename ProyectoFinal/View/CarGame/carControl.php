@@ -112,6 +112,7 @@
         var functionIndex = {
             value: 0
         };
+       playSpeech("Seleccione casilla de incio");
         // handle grid click input 
 
         boardGame.addEventListener('click', function() {

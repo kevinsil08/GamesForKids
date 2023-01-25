@@ -84,6 +84,26 @@ async function sendPrologQuery (comand) {
   const res = await response.text()
   return res
 }
+async function sendCarSession(gameSession) {
+  console.log(gameSession.numberCommands);
+  let data = {
+    directions: gameSession.directions.toString(),
+    com: gameSession.numberCommands,
+    numErrors: gameSession.numberError,
+  }
+  const response = await fetch(
+    'http://localhost/GamesForKids/ProyectoFinal/Model/carGame/carController.php',
+    {
+      method: 'POST',
+      body: JSON.stringify(data),
+      headers: {
+        'Content-Type': 'application/json;charset=utf-8'
+      }
+    }
+  )
+  const res = await response.text()
+  return res
+}
 
 function recognizeWord () {
   try {
@@ -173,11 +193,14 @@ function modifyCell (functionIndex) {
   switch (val) {
     case 0: // set initial cell
       showInstrucction(functionIndex)
+      playSpeech("Seleccione casilla final");
       cell.inicial = true
       functionIndex.value++
       return functionIndex
     case 1: // set final cell
     cell.final ? cell.final = false : cell.final = true;
+      playSpeech("Seleccione casillas de ruta ");
+    
       if (cell.inicial) {
         alert('la celda seleccionada es inicial')
       } else {
@@ -193,8 +216,10 @@ function modifyCell (functionIndex) {
       break
 
     case 3:
-      //set car direction
+      //set car directionr
+      playSpeech("Seleccione sentido del carrito") ;
       createBtnDirection()
+
       return
 
     default:
@@ -300,6 +325,10 @@ function saveGame() {
   let btnSave = document.getElementById("btnSaveGame");
   btnSave.classList.toggle("hidden");
   // send data to post controller json and save to sql
+   const promise  = sendCarSession(labyrinthGame);
+  promise.then((data) =>{
+    window.location = '../../View/Student/dashboard.php';
+  });
 
 }
 
