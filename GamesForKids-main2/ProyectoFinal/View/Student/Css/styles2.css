@@ -1,0 +1,893 @@
+@import url('https://fonts.googleapis.com/css2?family=Fuzzy+Bubbles:wght@700&display=swap');
+
+* {
+  box-sizing: border-box;
+}
+
+html{
+  margin: 0px;
+  padding: 0px;
+  height: 100%;
+}
+
+#hablar{
+  background-color: white;
+  width: 30px;
+  height: 30px;
+  border-radius: 12px;
+  border: solid 1;
+  border-color: green;
+  text-align: center;
+  cursor: pointer;
+}
+
+#hablar:hover{
+  background-color: lightgreen;
+  transition: transform .5s ease;
+  transform: scale(1.3);
+}
+
+.divisor.dark-blue{
+  transform: rotate(180deg);
+}
+
+body{
+  margin: auto 0;
+  height: 100%;
+  font-family: sans-serif;
+  
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  
+}
+
+.figures-section{
+  margin: 5px
+}
+
+
+.containerTitle{
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+}
+
+header {
+  flex-grow: 1;
+  background-color: rgb(34, 49, 63);
+  text-align: center;
+  font-family: 'Fuzzy Bubbles', sans-serif;
+  font-size: 25px;
+  font-size: 3vw;
+  color: white;
+}
+
+section{
+  flex: 1;
+  display: grid;
+  grid-template-columns: 33.3% 33.3% 33.3%;
+  grid-template-rows: auto  1fr auto;
+  align-items: center;
+  justify-items: center;
+  
+}
+
+.formImages{
+  flex: 1;
+  display: grid;
+  grid-template-columns: 33.3% 33.3% 33.3%;
+  grid-template-rows: auto  1fr auto;
+  align-items: center;
+  justify-items: center;
+  
+}
+
+section p{
+  font-family: 'Fuzzy Bubbles', sans-serif;
+  font-size: 2rem;
+}
+
+#img-conf{
+  grid-column: 3 / 3
+}
+
+section input[type="image"] {
+  width: 20px;
+  height: 20px;
+  align-self: center;
+  
+}
+
+#fig-to-select{
+  color: #edcb50;
+}
+
+.sec-game{
+  grid-column-start: 1;
+  grid-column-end: 4;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.card{
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+  box-shadow: 4px 4px 20px rgba(0,0,0,0.4);
+  margin: 5px;
+  cursor: pointer;
+  border-radius:5px;
+  border:1px solid #bbb;
+  transition: all 0.3s linear;
+  height: 20vh;
+  width: 20vh;
+}
+
+.cardVideo{
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+  box-shadow: 4px 4px 20px rgba(0,0,0,0.4);
+  margin: 5px;
+  cursor: pointer;
+  border-radius:5px;
+  border:1px solid #bbb;
+  transition: all 0.3s linear;
+  height: 15em;
+  width: 15em;
+}
+
+
+
+.camera-div{
+  grid-column-start: 1;
+  grid-column-end: 3;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.sec-imgs{
+  grid-column-start: 1;
+  grid-column-end: 4;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+#web_cam video {
+  width: 10em;
+  height: 10em;
+}
+
+img{
+  width: 15em;
+  height: 10em;
+}
+
+
+
+
+.card:hover {
+  -webkit-box-shadow:rgba(0,0,0,0.8) 0px 5px 15px, inset rgba(0,0,0,0.15) 0px -10px 20px;
+  -moz-box-shadow:rgba(0,0,0,0.8) 0px 5px 15px, inset rgba(0,0,0,0.15) 0px -10px 20px;
+  -o-box-shadow:rgba(0,0,0,0.8) 0px 5px 15px, inset rgba(0,0,0,0.15) 0px -10px 20px;
+  box-shadow:rgba(0,0,0,0.8) 0px 5px 15px, inset rgba(0,0,0,0.15) 0px -10px 20px;
+}
+
+.sec-buttons{
+  grid-column-start: 1;
+  grid-column-end: 4;
+}
+
+/* Figuras de las cartas */
+
+.triangle-border {
+  height: 0em;
+  width: 0em;
+  border-right:3.5em solid transparent;
+  border-bottom:7em solid  rgb(0, 0, 0);
+  border-left:3.5em solid transparent;
+  
+}
+
+.triangle-inner{
+  height: 0em;
+  width: 0em;
+  border-right:3em solid transparent;
+  border-bottom:6em solid  #e95150;
+  border-left:3em solid transparent;
+  position: relative;
+  left: -3em;
+  bottom: -0.75em;
+}
+
+.circle {
+  height: 7em;
+  width: 7em;
+  background-color: #448c74;
+  border-radius: 50%;
+  border: 0.25em solid rgb(0, 0, 0);
+}
+
+.square {
+  border: 0.25em solid rgb(0, 0, 0);
+  background: #edcb50;
+  left: calc(50% - 3em);
+  top: calc(50% - 3em);
+  height: 7em;
+  width: 7em;
+}
+
+/* animacion para mandar desde js al colocar figura erronea */
+.square:hover , .circle:hover  {
+  animation: shake 1s;
+  animation-iteration-count: infinite;
+}
+
+.triangle-border:hover{
+  animation: shake-triangle 1s;
+  animation-iteration-count: infinite;
+}
+
+@keyframes shake-triangle{
+  0% { transform: translate(1px, 1px) rotate(0deg);border-right:1.5em solid transparent;
+    border-bottom:3em solid  rgb(255, 255, 118);
+    border-left:1.5em solid transparent; }
+    10% { transform: translate(-1px, -2px) rotate(-1deg); }
+    20% { transform: translate(-3px, 0px) rotate(1deg); }
+    30% { transform: translate(3px, 2px) rotate(0deg); }
+    40% { transform: translate(1px, -1px) rotate(1deg); }
+    50% { transform: translate(-1px, 2px) rotate(-1deg); }
+    60% { transform: translate(-3px, 1px) rotate(0deg); }
+    70% { transform: translate(3px, 1px) rotate(-1deg); }
+    80% { transform: translate(-1px, -1px) rotate(1deg); }
+    90% { transform: translate(1px, 2px) rotate(0deg); }
+    100% { transform: translate(1px, -2px) rotate(-1deg); }
+  }
+  
+  @keyframes shake{
+    0% { transform: translate(1px, 1px) rotate(0deg); border: 0.25em solid rgb(255, 255, 118); }
+    10% { transform: translate(-1px, -2px) rotate(-1deg); }
+    20% { transform: translate(-3px, 0px) rotate(1deg); }
+    30% { transform: translate(3px, 2px) rotate(0deg); }
+    40% { transform: translate(1px, -1px) rotate(1deg); }
+    50% { transform: translate(-1px, 2px) rotate(-1deg); }
+    60% { transform: translate(-3px, 1px) rotate(0deg); }
+    70% { transform: translate(3px, 1px) rotate(-1deg); }
+    80% { transform: translate(-1px, -1px) rotate(1deg); }
+    90% { transform: translate(1px, 2px) rotate(0deg); }
+    100% { transform: translate(1px, -2px) rotate(-1deg); }
+  }
+  
+  #btn-empezar {
+    background: #729fdf;
+    border: none;
+    text-transform: uppercase;
+    font-size: 20px;
+    color: white;
+    border-radius: 7px;
+    box-shadow: 0 7px 0px #3f51b5;
+    display: inline-block;
+    transition: all .2s;
+    position: relative;
+    padding: 1.5rem 6rem;
+    position: relative;
+    top: 0;
+    cursor: pointer;
+    margin:0 20px;
+    font-family: 'Fuzzy Bubbles', sans-serif;
+    
+  }
+
+  .btn-photo{
+    height: 50px;
+    background: #edcb50;
+    border: none;
+    text-transform: uppercase;
+    font-size: 20px;
+    color: white;
+    border-radius: 7px;
+    box-shadow: 0 7px 0px #8f7b32;
+    display: inline-block;
+    transition: all .2s;
+    position: relative;
+    padding: 1.5rem 6rem;
+    position: relative;
+    top: 0;
+    cursor: pointer;
+    margin:75px 20px;
+    font-family: 'Fuzzy Bubbles', sans-serif;
+  }
+
+  video{
+    border-radius: 30px;
+  }
+
+  .btn-photo:active {
+    top: 3px;
+    box-shadow: 0 2px 0px #edcb50b6;
+    transition: all .2s;
+  }
+  
+  .sec-buttons{
+    padding-top: 0.5rem;
+  }
+  
+  #btn-empezar:active {
+    top: 3px;
+    box-shadow: 0 2px 0px #3f51b5;
+    transition: all .2s;
+  }
+  
+  footer{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+    background-color:#d24d57;
+  }
+  
+  .divisor{
+    padding:0;
+    margin:0;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    position:relative;
+  }
+  
+  
+  
+  .score-container{
+    align-self: flex-start;
+    width: 15%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-family: 'Fuzzy Bubbles', sans-serif;
+    font-size: 25px;
+    color: azure;
+  }
+  
+  /* media querys al final para especifidad  */
+  /* // pantalla compoutadora mayor a 1300 px  y menor a  2600 */
+  @media all and (min-width: 1200px) and (max-width: 2600px) and (min-height: 690px){ 
+    body{
+      color:#b53f86;
+    }
+    header h2{
+      font-size: 3rem;
+      padding: 0%;
+      margin: 0%;
+    }
+    
+    .card{
+      height: 20vh;
+      width: 20vh;
+      margin: 2rem;
+      padding-top: 1rem;
+    }
+
+    .cardVideo{
+      height: 15em;
+      width: 20em;
+      margin: 2rem;
+      padding-top: 1rem;
+    }
+    
+    .container{
+      height: 15%;
+    }
+    
+    section{
+      grid-template-rows: 3rem  1fr auto;
+    }
+    
+    #btn-empezar {
+      padding: 0.6rem 6rem;
+      margin:0 20px;
+    }
+    
+    footer p{
+      align-self: flex-start;
+    }  
+  }
+  @media all and (min-width: 1200px) and (max-width: 2600px) and (max-height: 690px){ 
+    
+    header h2{
+      font-size: 2rem;
+      padding: 0%;
+      margin: 0%;
+    }
+    section{
+      grid-template-rows: 1rem  1fr auto;
+    }
+    .card{
+      height: 20vh;
+      width: 20vh;
+      margin: 3rem;
+      padding-top: 0%;
+    }
+
+    .cardVideo{
+      height: 45vh;
+      width: 60vh;
+      margin: 3rem;
+      padding-top: 0%;
+    }
+    
+    .circle , .square{
+      height: 5em;
+      width: 5em;
+    }
+    
+    .triangle-border {
+      height: 0em;
+      width: 0em;
+      border-right:2.5em solid transparent;
+      border-bottom:5em solid  rgb(0, 0, 0);
+      border-left:2.5em solid transparent;
+    }
+    
+    .triangle-inner{
+      height: 0em;
+      width: 0em;
+      border-right:2.15em solid transparent;
+      border-bottom:4.5em solid  #e95150;
+      border-left: 2.15em solid transparent;
+      position: relative;
+      left: -2.15em;
+      bottom: -0.3em;
+    }
+    
+    
+  }
+  
+  /* 1025px — 1200px: Desktops, large screens */
+  @media all and (min-width: 1025px) and (max-width: 1200px) { 
+    body{
+      color:#3f4fb5;
+    }
+    header h2{
+      font-size: 3rem;
+      padding: 0%;
+      margin: 0%;
+    }
+    
+    .card{
+      height: 20vh;
+      width: 20vh;
+      margin: 1rem;
+      padding-top: 1.5rem;
+    }
+
+    .cardVideo{
+      height: 20vh;
+      width: 20vh;
+      margin: 1rem;
+      padding-top: 1.5rem;
+    }
+    
+    .container{
+      height: 15%;
+    }
+    
+    section{
+      grid-template-rows: 3rem  1fr auto;
+    }
+    
+    #btn-empezar {
+      padding: 0.6rem 6rem;
+      margin:0 20px;
+    }
+    
+    footer p{
+      align-self: flex-start;
+    }  
+    .circle , .square{
+      height: 6.5em;
+      width: 6.5em;
+    }
+    
+    .triangle-border {
+      border-right:3.5em solid transparent;
+      border-bottom:7em solid  rgb(0, 0, 0);
+      border-left:3.5em solid transparent;
+      
+    }
+    
+    .triangle-inner{
+      border-right:3em solid transparent;
+      border-bottom:6em solid  #e95150;
+      border-left:3em solid transparent;
+      position: relative;
+      left: -3em;
+      bottom: -0.75em;
+    }
+
+    #web_cam video {
+      max-width: 10em;
+      max-height: 10em;
+      margin-left: 2.5em;
+    }
+
+    img{
+      max-width: 70%;
+      max-height: 190%;
+      margin-left: 15%;
+    }
+  }
+  /* 769px — 1024px: Small screens, laptops */
+  @media all and (min-width: 769px) and (max-width: 1024px) and (max-height: 2000px)  and (min-height: 500px){ 
+    body{
+      color:#cc7222;
+    }
+    
+    header h2{
+      font-size: 3rem;
+      padding: 0%;
+      margin: 0%;
+    }
+    
+    .card{
+      height: 10vh;
+      width: 10vh;
+      margin: 1rem;
+      padding-top: 1.5rem;
+    }
+
+    .cardVideo{
+      height: 15em;
+      width: 15em;
+      margin: 1rem;
+      padding-top: 1.5rem;
+    }
+    
+    .container{
+      height: 8%;
+    }
+    
+    section{
+      grid-template-rows: 3rem  1fr auto;
+    }
+    
+    #btn-empezar {
+      padding: 0.3rem 5rem;
+      margin:0 15px;
+    }
+    
+    footer p{
+      align-self: flex-start;
+    }  
+    .circle , .square{
+      height: 2.5em;
+      width: 2.5em;
+    }
+    
+    .triangle-border {
+      border-right:1.25em solid transparent;
+      border-bottom:2.5em solid  rgb(0, 0, 0);
+      border-left:1.25em solid transparent;
+      
+    }
+    
+    .triangle-inner{
+      border-right:1em solid transparent;
+      border-bottom:2.125em solid  #e95150;
+      border-left:1em solid transparent;
+      position: relative;
+      left: -1em;
+      bottom: -0.25em;
+    }
+    .score-container p{
+      padding-right: 2rem;
+    }    
+
+    #web_cam video {
+      width: 5em;
+      height: 8em;
+    }
+
+    img{
+      width: 13em;
+      height: 10em;
+    }
+
+
+  }
+
+  @media all and (min-width: 769px) and (max-width: 1024px) and (min-height: 150px) and (max-height: 499px){ 
+    body{
+      color:#cc7222;
+    }
+    header h2{
+      font-size: 1.5rem;
+      padding: 0%;
+      margin: 0%;
+    }
+    
+    .card{
+      height: 20vh;
+      width: 20vh;
+      margin: 1rem;
+      padding-top: 1.5rem;
+    }
+
+    .cardVideo{
+      height: 44vh;
+      width: 50vh;
+      margin: 1rem;
+      padding-top: 1.5rem;
+    }
+    
+    .container{
+      height: 8%;
+    }
+    
+    section{
+      grid-template-rows: 1rem  1fr auto;
+    }
+
+    section p{
+      font-size: 1.4rem;
+    }
+    
+    #btn-empezar {
+      padding: 0rem 2rem;
+      margin:0 5px;
+    }
+    
+    footer p{
+      align-self: flex-start;
+    }  
+    .circle , .square{
+      height: 3em;
+      width: 3em;
+    }
+    
+    .triangle-border {
+      border-right:1.5em solid transparent;
+      border-bottom:3em solid  rgb(0, 0, 0);
+      border-left:1.5em solid transparent;
+      
+    }
+    .etiqueta{
+      font-size: 0.7rem;
+      font-family: 'Fuzzy Bubbles', sans-serif;
+    }
+    .triangle-inner{
+      border-right:1.25em solid transparent;
+      border-bottom:2.5em solid  #e95150;
+      border-left:1.25em solid transparent;
+      position: relative;
+      left: -1.25em;
+      bottom: -0.35em;
+    }
+    .score-container p{
+      padding-right: 1rem;
+    }    
+  }
+
+  /* 481px — 768px: iPads, Tablets */
+
+  @media all and (min-width: 481px) and (max-width: 768px) and (min-height: 501px) and (max-height:1500px){ 
+    body{
+      color:#14754e;
+    }
+    header h2{
+      font-size: 2rem;
+      padding: 0%;
+      margin: 0%;
+    }
+    
+    .card{
+      height: 10vh;
+      width: 10vh;
+      margin: 1rem;
+      padding-top: 1.5rem;
+    }
+
+    .cardVideo{
+      height: 25vh;
+      width: 25vh;
+      margin: 1rem;
+      padding-top: 1.5rem;
+    }
+    
+    .container{
+      height: 8%;
+    }
+    section p{
+      font-size: 1.5rem;
+    }
+    section{
+      grid-template-rows: 3rem  1fr auto;
+    }
+    
+    #btn-empezar {
+      padding: 0.3rem 5rem;
+      margin:0 15px;
+    }
+    
+    footer p{
+      align-self: flex-start;
+    }  
+    .circle , .square{
+      height: 2.5em;
+      width: 2.5em;
+    }
+    
+    .triangle-border {
+      border-right:1.25em solid transparent;
+      border-bottom:2.5em solid  rgb(0, 0, 0);
+      border-left:1.25em solid transparent;
+      
+    }
+    
+    .triangle-inner{
+      border-right:1em solid transparent;
+      border-bottom:2.125em solid  #e95150;
+      border-left:1em solid transparent;
+      position: relative;
+      left: -1em;
+      bottom: -0.25em;
+    }
+    .score-container p{
+      padding-right: 2rem;
+    } 
+  }
+  @media all and (min-width: 481px) and (max-width: 768px) and (min-height: 200px) and (max-height:500px) { 
+  body{
+    color:#14754e;
+  }
+  header h2{
+    font-size: 1.5rem;
+    padding: 0%;
+    margin: 0%;
+  }
+  
+  .card{
+    height: 20vh;
+    width: 20vh;
+    margin: 1rem;
+    padding-top: 1.5rem;
+  }
+
+  .cardVideo{
+    height: 45vh;
+    width: 60vh;
+    margin: 1rem;
+    padding-top: 1.5rem;
+  }
+  
+  .container{
+    height: 8%;
+  }
+  
+  section{
+    grid-template-rows: 1rem  1fr auto;
+  }
+
+  section p{
+    font-size: 1.4rem;
+  }
+  
+  #btn-empezar {
+    padding: 0rem 2rem;
+    margin:0 5px;
+  }
+  
+  footer p{
+    align-self: flex-start;
+  }  
+  .circle , .square{
+    height: 3em;
+    width: 3em;
+  }
+  
+  .triangle-border {
+    border-right:3em solid transparent;
+    border-bottom:6em solid  rgb(0, 0, 0);
+    border-left:3em solid transparent;
+    
+  }
+  .etiqueta{
+    font-size: 0.7rem;
+  }
+  .triangle-inner{
+    border-right:2.5em solid transparent;
+    border-bottom:5em solid  #e95150;
+    border-left:2.5em solid transparent;
+    position: relative;
+    left: -2.5em;
+    bottom: -0.7em;
+  }
+  .score-container p{
+    padding-right: 1rem;
+  }    
+}
+  
+  @media all and (min-width: 280px) and (max-width: 480px) { 
+    body{
+      color:#751414;
+      width: 100%;
+    }
+    header h2{
+      font-size: 1rem;
+      padding: 0%;
+      margin: 0%;
+    }
+    .sec-game{
+      justify-self: start;
+      align-self: start;
+
+    }
+    .card{
+      height: 15vh;
+      width: 15vh;
+      margin: 1rem;
+      padding-top: 0.5rem;
+    }
+
+    .cardVideo{
+      height: 30vh;
+      width: 45vh;
+      margin: 1rem;
+      padding-top: 0.5rem;
+    }
+    
+    .container{
+      height: 8%;
+    }
+    section p{
+      font-size: 1rem;
+    }
+    section{
+      grid-template-rows: 1rem  1fr auto;
+    }
+    
+    #btn-empezar {
+      padding: 0.3rem 5rem;
+      margin:0 15px;
+    }
+    
+    footer p{
+      align-self: flex-start;
+    }  
+    .circle , .square{
+      height: 3em;
+      width: 3em;
+    }
+    
+    .triangle-border {
+      border-right:3em solid transparent;
+      border-bottom:6em solid  rgb(0, 0, 0);
+      border-left:3em solid transparent;
+      
+    }
+    
+    .triangle-inner{
+      border-right:2.5em solid transparent;
+      border-bottom:5em solid  #e95150;
+      border-left:2.5em solid transparent;
+      position: relative;
+      left: -2.5em;
+      bottom: -0.7em;
+    }
+    .score-container p{
+      padding-right: 2rem;
+    } 
+
+    video{
+      height: 500px;
+      width: 500px;
+    }
+  }

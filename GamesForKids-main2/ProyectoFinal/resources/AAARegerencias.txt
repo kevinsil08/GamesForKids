@@ -1,0 +1,10 @@
+styles1:
+styles2:
+styles3: 
+styles4: login del administrador
+styles5: pagina de inicio welcome
+styles6: registro del profesor
+styles7: login del profesor
+styles8: login del estudiante
+
+styles10: registro del administrador
