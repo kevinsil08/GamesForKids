@@ -26,12 +26,12 @@ if(isset($_GET['mensaje']) && $_GET['mensaje'] == 'error'){
 		<form action="../../Model/Login/loginStudentController.php" method="post" >
 			<h1 id="error"></h1>
 			<div class="username">
-				<label>Nombre : </label>
-				<input type="text" name="user" required>
+				<label>C&eacute;dula : </label>
+				<input type="text" name="txtPassport" required>
 			</div>
 			<div class="password">
-				<label>Codigo de estudiante : </label>
-				<input type="password" name="pass" required>
+				<label>Contraseña : </label>
+				<input type="password" name="txtPassword" required>
 			</div>
 			<input type="submit" value="Iniciar sesion">
 		</form>

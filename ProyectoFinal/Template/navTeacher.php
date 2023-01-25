@@ -9,10 +9,10 @@
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                 <li class="nav-item">
-                    <a class="nav-link text-white" href="../../View/Teacher/studentsTeacher.php">Perfiles Estudiantes</a>
+                    <a class="nav-link text-white" href="../../View/Teacher/studentsTeacher.php">Perfiles de Estudiantes</a>
                 </li>
                 <li class="nav-item">
-                <a class="nav-link text-white" href="../../View/Teacher/notesStudentsTeacher.php">Calificaciones Estudiantes</a>
+                <a class="nav-link text-white" href="../../View/Teacher/notesStudentsTeacher.php">Calificaciones de Estudiantes</a>
                 </li>
             </ul>
             <ul class="navbar-nav mb-lg-0 d-flex" style="margin-right: 10%;">

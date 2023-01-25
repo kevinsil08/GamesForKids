@@ -24,7 +24,7 @@ if(empty($_SESSION['tch_id'])){
                 if(isset($_GET['mensaje']) && $_GET['mensaje'] == 'error'){
                 ?>
                 <div class="alert alert-danger alert-dismissible fade show" role="alert">
-                    <strong>Error!</strong> Rellena todos los campos.
+                    <strong>Error!</strong> Rellena todos los campos y/o revisa que la c&eacute;dula no haya sido registrada antes.
                     <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                 </div>
                 <?php
@@ -133,6 +133,7 @@ if(empty($_SESSION['tch_id'])){
             $last_name = ""; 
             $passwd_student = "";
             $email_student = null;
+            $passport = null;
             $date_birth_student = "";
             $sex_student = "";
             $codigo = null;
@@ -154,6 +155,7 @@ if(empty($_SESSION['tch_id'])){
                 $passwd_student = $student['std_password'];
                 $date_birth_student = $student['std_date_birth'];
                 $sex_student = $student['std_sex'];
+                $passport = $student['std_passport'];
             }
             ?>
 
@@ -175,6 +177,10 @@ if(empty($_SESSION['tch_id'])){
                         <div class="mb-3">
                             <label for="txtApellido" class="form-label">Apellido: </label>
                             <input type="text" class="form-control" name="txtApellido" autofocus required="true" value="<?php echo $last_name; ?>">
+                        </div>
+                        <div class="mb-3">
+                            <label for="txtPassport" class="form-label">C&eacute;dula: </label>
+                            <input type="text" class="form-control" name="txtPassport" minlength="10" maxlength="10" autofocus required="true" value="<?php echo $passport; ?>">
                         </div>
                         <div class="mb-3">
                             <label for="txtEmail" class="form-label">Correo: </label>

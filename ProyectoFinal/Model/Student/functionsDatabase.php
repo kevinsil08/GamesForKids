@@ -20,9 +20,9 @@ function listStudents($cnn,$id_teacher){
     
 }
 
-function insertStudent($cnn, $name, $last_name,$passwd,$email,$date_birth,$sex_student,$id_teacher){
+function insertStudent($cnn, $name,$passport, $last_name,$passwd,$email,$date_birth,$sex_student,$id_teacher){
 
-    $sql = "CALL `pr_insert_student`('$name', '$last_name','$passwd','$email','$date_birth','$sex_student', $id_teacher);";
+    $sql = "CALL `pr_insert_student`('$name','$passport' ,'$last_name','$passwd','$email','$date_birth','$sex_student', $id_teacher);";
     
     do
 	if($result=mysqli_store_result($cnn)){
@@ -54,9 +54,9 @@ function selectStudent($cnn, $id_student){
     
 }
 
-function updateStudent($cnn, $id_student, $name,$last_name,$passwd,$email,$date_birth,$sex_student){
+function updateStudent($cnn, $id_student, $passport,$name,$last_name,$passwd,$email,$date_birth,$sex_student){
 
-    $sql = "CALL `pr_update_student`($id_student, '$name', '$last_name','$passwd','$email','$date_birth','$sex_student');";
+    $sql = "CALL `pr_update_student`($id_student, '$name', '$passport','$last_name','$passwd','$email','$date_birth','$sex_student');";
     do
 	if($result=mysqli_store_result($cnn)){
 		mysqli_free_result($result);

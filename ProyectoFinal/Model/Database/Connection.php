@@ -1,7 +1,7 @@
 <?php
 $servername = "localhost";
 $username = "root";
-$password = "3434";
+$password = "";
 $db = "games_kids";
 
 try{

@@ -69,9 +69,11 @@
                     <tr>
                         <th scope="col">Nombre</th>
                         <th scope="col">Apellido</th>
+                        <th scope="col">Nombre del Juego</th>
                         <th scope="col"># de Preguntas</th>
-                        <th scope="col"># de Preguntas contestadas correctamente</th>
+                        <th scope="col"># de Preguntas contestadas incorrectamente</th>
                         <th scope="col">Fecha</th>
+                        <th scope="col">Creado por</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -98,9 +100,21 @@
                     <tr>
                         <td><?php echo $fila['std_name']; ?></td>
                         <td><?php echo $fila['std_last_name']; ?></td>
+                        <td><?php echo $fila['tpg_name']; ?></td>
                         <td><?php echo $fila['match_quantity_answers']; ?></td>
                         <td><?php echo $fila['match_correct_answer_student']; ?></td>
                         <td><?php echo $fila['mtg_created']; ?></td>
+                        <?php
+                        
+                        $GENERATED_BY = null;
+                            if($fila['mtg_typ_match'] == "T"){
+                                $GENERATED_BY = "Profesor";
+                            }else{
+                                $GENERATED_BY = "Estudiante";
+                            }
+                        ?>
+
+                        <td><?php echo $GENERATED_BY; ?></td>
                     </tr>
                 
                 <?php

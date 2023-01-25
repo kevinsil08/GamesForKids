@@ -58,6 +58,9 @@ if((isset($_GET['juego']) && $_GET['juego'] == 'generado') || (isset($result_mat
                 
                 if(isset($type_games)){ 
                     foreach($type_games as $type_game){
+                      if($count_type == 1){
+                        break;
+                      }
                         $detail_only_game = listDetailGames($conn,$type_game['tpg_id']);//llama a la base de datos para que haga la consulta de los tipo de juegos
             ?>
             <div class="card mb-5">
@@ -100,6 +103,8 @@ if((isset($_GET['juego']) && $_GET['juego'] == 'generado') || (isset($result_mat
         </div>
   </div>
 </div>
+
+<br><br>
 
 
 

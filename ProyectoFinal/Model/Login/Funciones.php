@@ -114,18 +114,27 @@
 
 //-------------------------------------------------------------------------------------------------------
 //estudiante
-	function loginStd($cnn, $nombre, $id){
-		$sql = "SELECT * FROM `student` WHERE std_name='$nombre' AND std_id='$id'";
+	function loginStd($cnn, $passport, $passwd){
+		$sql = "SELECT * FROM `student` WHERE std_passport='$passport' AND std_password='$passwd'";
 		do
 		if($result=mysqli_store_result($cnn)){
 			mysqli_free_result($result);
 	    } while(mysqli_more_results($cnn) && mysqli_next_result($cnn));
 		
-		$result = mysqli_query($cnn , $sql);
+		//$result = mysqli_query($cnn , $sql);
+
+		if(!mysqli_query($cnn,$sql)){
+	        $e = mysqli_error($cnn);
+	        echo "Error: ".$e;
+	    }
+
+
 	    if (mysqli_num_rows($result) > 0) {
 	        $teacher = mysqli_fetch_assoc($result);
 	        return $teacher;
 	    }
+
+		return null;
 	    
 	}
 
