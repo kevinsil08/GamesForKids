@@ -106,7 +106,8 @@
             dir: []
         };
         var labyrinthGame;
-        var useArduino = true;
+       // Set true for use arduino car, false for use web interface car only 
+        var useArduino = false;
         var selectedFinalCell;
         //array to control the modify order of cells
         var functionIndex = {
