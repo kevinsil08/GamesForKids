@@ -113,7 +113,9 @@
             value: 0
         };
         // handle grid click input 
-
+        window.onload = function(){
+            playSpeech("Seleccione casilla de inicio")
+        } 
         boardGame.addEventListener('click', function() {
             modifyCell(functionIndex);
         });
@@ -190,23 +192,23 @@
 
 
 
-        function openModal(title, message) {
-            const modal = document.querySelector(".modal");
-            const overlay = document.querySelector(".overlay");
-            document.getElementById("titleDialog").innerText = title;
-            document.getElementById("msj").innerText = message;
-            modal.classList.remove("hidden");
-            overlay.classList.remove("hidden");
-        }
+        // function openModal(title, message) {
+        //     const modal = document.querySelector(".modal");
+        //     const overlay = document.querySelector(".overlay");
+        //     document.getElementById("titleDialog").innerText = title;
+        //     document.getElementById("msj").innerText = message;
+        //     modal.classList.remove("hidden");
+        //     overlay.classList.remove("hidden");
+        // }
 
-        const closeModal = function() {
-            const modal = document.querySelector(".modal");
-            const overlay = document.querySelector(".overlay");
-            modal.classList.add("hidden");
-            overlay.classList.add("hidden");
-        }
+        // const closeModal = function() {
+        //     const modal = document.querySelector(".modal");
+        //     const overlay = document.querySelector(".overlay");
+        //     modal.classList.add("hidden");
+        //     overlay.classList.add("hidden");
+        // }
 
-        closeModalBtn, addEventListener("click", closeModal);
+        // closeModalBtn, addEventListener("click", closeModal);
 
 
         // 

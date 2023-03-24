@@ -89,12 +89,11 @@ function recognizeWord () {
   try {
     recognition.start()
     // console.log('Ready to receive a direction command.')
-    btnListen.value= " 🎤 ";
-    console.log(btnListen);
-
+    btnListen.value = ' 🎤 '
+    console.log(btnListen)
   } catch (error) {
-    let errorP = document.getElementById("errorListen")
-    errorP.innerText = "Escuchando ..."
+    let errorP = document.getElementById('errorListen')
+    errorP.innerText = 'Escuchando ...'
     setTimeout(() => {
       if (!errorP.classList.contains('hidden')) {
         setTimeout(() => {
@@ -110,50 +109,59 @@ function recognizeWord () {
 recognition.onresult = function (event) {
   obtainedWord = event.results[0][0].transcript.toUpperCase()
   console.log(obtainedWord)
-  btnListen.value= "Escuchar";
-  if ('DERECHA DERECHO'.includes(obtainedWord) && ('DERECHA DERECHO').includes(labyrinthGame.currentDirection) ) {
+  btnListen.value = 'Escuchar'
+  if (
+    'DERECHA DERECHO'.includes(obtainedWord) &&
+    'DERECHA DERECHO'.includes(labyrinthGame.currentDirection)
+  ) {
     if (useArduino) {
-      enviarOrden('R');
+      enviarOrden('R')
     }
     // move car tile
-    moveCar("DERECHA");
-    labyrinthGame.increaseIndexDir();
-  }
-  else if ('IZQUIERDA IZQUIERDO'.includes(obtainedWord) && ('IZQUIERDA IZQUIERDO').includes(labyrinthGame.currentDirection) ) {
+    moveCar('DERECHA')
+    labyrinthGame.increaseIndexDir()
+  } else if (
+    'IZQUIERDA IZQUIERDO'.includes(obtainedWord) &&
+    'IZQUIERDA IZQUIERDO'.includes(labyrinthGame.currentDirection)
+  ) {
     if (useArduino) {
-      enviarOrden('L');
+      enviarOrden('L')
     }
     // move car tile
-    moveCar("IZQUIERDA");
-    labyrinthGame.increaseIndexDir();
-  }
-  else if ('ADELANTE'.includes(obtainedWord) && ('ADELANTE').includes(labyrinthGame.currentDirection) ) {
+    moveCar('IZQUIERDA')
+    labyrinthGame.increaseIndexDir()
+  } else if (
+    'ADELANTE'.includes(obtainedWord) &&
+    'ADELANTE'.includes(labyrinthGame.currentDirection)
+  ) {
     if (useArduino) {
-      enviarOrden('F');
+      enviarOrden('F')
     }
     // move car tile
-    moveCar("ADELANTE");
-    labyrinthGame.increaseIndexDir();
-  }else{
-    enviarOrden('E');
-    labyrinthGame.increaseError();
-    grid.cellByCord(tileWithCar.x , tileWithCar.y).shakeCell();
+    moveCar('ADELANTE')
+    labyrinthGame.increaseIndexDir()
+  } else {
+    enviarOrden('E')
+    labyrinthGame.increaseError()
+    grid.cellByCord(tileWithCar.x, tileWithCar.y).shakeCell()
   }
-  showScore();
-  if (selectedFinalCell.x == tileWithCar.x && selectedFinalCell.y == tileWithCar.y  ) {
+  showScore()
+  if (
+    selectedFinalCell.x == tileWithCar.x &&
+    selectedFinalCell.y == tileWithCar.y
+  ) {
     // enviarOrden('G');
-    dropConfetti();
-    showSaveGame();
+    dropConfetti()
+    showSaveGame()
   }
-
 }
 
-function showScore(){
-  document.getElementById("pScore").innerText = labyrinthGame.indexDir;   
+function showScore () {
+  document.getElementById('pScore').innerText = labyrinthGame.indexDir
 }
 
 recognition.onspeechend = function () {
-  document.getElementById("btnListen").innerText = " ... ";
+  document.getElementById('btnListen').innerText = ' ... '
   recognition.stop()
 }
 
@@ -172,12 +180,14 @@ function modifyCell (functionIndex) {
   let cell = grid.cellById(id_selected)
   switch (val) {
     case 0: // set initial cell
+      playSpeech('Seleccione casilla final')
       showInstrucction(functionIndex)
       cell.inicial = true
       functionIndex.value++
       return functionIndex
     case 1: // set final cell
-    cell.final ? cell.final = false : cell.final = true;
+      playSpeech('Seleccione casillas de ruta')
+      cell.final ? (cell.final = false) : (cell.final = true)
       if (cell.inicial) {
         alert('la celda seleccionada es inicial')
       } else {
@@ -187,8 +197,8 @@ function modifyCell (functionIndex) {
       }
       break
     case 2: // set path cells
-    console.log(cell)
-    cell.ruta? cell.ruta = false : cell.ruta = true;
+      console.log(cell)
+      cell.ruta ? (cell.ruta = false) : (cell.ruta = true)
       return createBtnPaths(createPathsBtn, functionIndex) + 1
       break
 
@@ -230,18 +240,18 @@ function createBtnDirection () {
     let optDiv = document.createElement('div')
     let rotateLeftBtn = document.createElement('button')
     let rotateRightBtn = document.createElement('button')
-    optDiv.classList.add("optDiv");
+    optDiv.classList.add('optDiv')
     rotateLeftBtn.innerText = '⭯'
     rotateLeftBtn.classList.add('btn', 'btn-outline-primary', 'btn-lg')
-    rotateLeftBtn.id = "lftBtn";
-    rotateRightBtn.id = "rigBtn";
+    rotateLeftBtn.id = 'lftBtn'
+    rotateRightBtn.id = 'rigBtn'
     rotateRightBtn.classList.add('btn', 'btn-outline-primary', 'btn-lg')
     optionsContainer.classList.add('btnContainer')
     optionsContainer.id = 'dirDiv'
     rotateRightBtn.innerText = '⭮'
     optDiv.appendChild(rotateLeftBtn)
     optDiv.appendChild(rotateRightBtn)
-    optionsContainer.appendChild(optDiv);
+    optionsContainer.appendChild(optDiv)
     document.getElementById('ins-det').appendChild(optionsContainer)
     rotateLeftBtn.addEventListener('click', rotateLeft)
     rotateRightBtn.addEventListener('click', rotateRight)
@@ -288,43 +298,43 @@ function hideLastInst (title) {
   document.getElementById('ins-title').innerText = title
 }
 
-function showSaveGame(){
-  let btnSave = document.getElementById("btnSaveGame");
-  btnSave.classList.toggle("hidden");
-  btnSave.addEventListener('click' , saveGame);
-  document.getElementById("formSave").appendChild(btnSave);
+function showSaveGame () {
+  let btnSave = document.getElementById('btnSaveGame')
+  btnSave.classList.toggle('hidden')
+  btnSave.addEventListener('click', saveGame)
+  document.getElementById('formSave').appendChild(btnSave)
 }
 
-function saveGame() {
-  console.log("juego guardado ");
-  let btnSave = document.getElementById("btnSaveGame");
-  btnSave.classList.toggle("hidden");
+function saveGame () {
+  console.log('juego guardado ')
+  let btnSave = document.getElementById('btnSaveGame')
+  btnSave.classList.toggle('hidden')
   // send data to post controller json and save to sql
-
 }
 
-function playSpeech(text){
-  var utterance = new SpeechSynthesisUtterance(text);
-  utterance.lang = 'es-ES';
-  var voices = window.speechSynthesis.getVoices();
-  utterance.voice = voices.filter(function(voice) { return voice.name == 'Zira'; })[0];
-  speechSynthesis.speak(utterance);
+function playSpeech (text) {
+  var utterance = new SpeechSynthesisUtterance(text)
+  utterance.lang = 'es-ES'
+  var voices = window.speechSynthesis.getVoices()
+  utterance.voice = voices.filter(function (voice) {
+    return voice.name == 'Zira'
+  })[0]
+  speechSynthesis.speak(utterance)
 }
 
-
-// third party confetty 
+// third party confetty
 
 const start = () => {
-            setTimeout(function() {
-                confetti.start()
-            }, 1000); 
-        };
-        const stop = () => {
-            setTimeout(function() {
-                confetti.stop()
-            }, 4000); 
-        };
-function dropConfetti(){
-    start();
-    stop();
+  setTimeout(function () {
+    confetti.start()
+  }, 1000)
+}
+const stop = () => {
+  setTimeout(function () {
+    confetti.stop()
+  }, 4000)
+}
+function dropConfetti () {
+  start()
+  stop()
 }
